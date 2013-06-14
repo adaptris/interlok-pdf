@@ -1,0 +1,38 @@
+<project basedir="." default="prepare-ivy" name="IvyTasks" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+  <target name="init-ivy">
+    <property name="ivy.jar.file" value="${basedir}/../lib/ivy.jar"/>
+  	<property name="ivy.install.version" value="2.3.0"/>
+  	<property name="ivy.publish.revision.final" value="${ivy.publish.revision}-SNAPSHOT"/>
+  	<property name="ivy.repo" value="nexus-snapshots"/>
+  </target>
+
+  <target name="download-ivy" depends="init-ivy, init" unless="skip.ivy.download">
+	<echo message="Downloading ivy..."/>
+	<get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" dest="${ivy.jar.file}" usetimestamp="true"/>
+  </target>
+
+  <target name="install-ivy" depends="download-ivy" description="Install ivy">
+	<path id="ivy.lib.path">
+	  <pathelement location="${ivy.jar.file}"/>
+	</path>
+	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+  </target>
+
+  <target name="prepare-ivy" depends="install-ivy" description="Loads all the ivy definitions and settings">
+  	<ivy:settings file="${basedir}/../ivy-settings.xml" />
+  	<ivy:resolve/>
+
+  	<!-- set up main compile classpath using ivy dependecny management -->
+  	<ivy:cachepath pathid="main.classpath" conf="compile"/>
+  </target>
+
+  <target name="publish" depends="prepare-ivy">
+  	<ivy:makepom ivyfile="ivy.xml" pomfile="${project.dist.dir}/pom.xml"/>
+  	<ivy:publish resolver="${ivy.repo}" revision="${ivy.publish.revision.final}" overwrite="true" publishivy="true">
+  	  <artifacts pattern="${project.dist.dir}/[artifact].[ext]"/>
+  	  <artifacts pattern="${project.dist.dir}/pom.xml"/>
+  	</ivy:publish>
+  </target>
+
+</project>
