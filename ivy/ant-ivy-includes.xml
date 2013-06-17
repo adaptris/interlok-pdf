@@ -3,7 +3,7 @@
   <target name="init-ivy">
     <property name="ivy.jar.file" value="${basedir}/../lib/ivy.jar"/>
   	<property name="ivy.install.version" value="2.3.0"/>
-  	<property name="ivy.publish.revision.final" value="${ivy.publish.revision}-SNAPSHOT"/>
+  	<property name="ivy.publish.revision.final" value="${ivy.publish.revision}"/>
   	<property name="ivy.repo" value="nexus-snapshots"/>
   </target>
 
