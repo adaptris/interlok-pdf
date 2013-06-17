@@ -7,7 +7,7 @@
   	<property name="ivy.repo" value="nexus-snapshots"/>
   </target>
 
-  <target name="download-ivy" depends="init-ivy, init" unless="skip.ivy.download">
+  <target name="download-ivy" depends="init-ivy" unless="skip.ivy.download">
 	<echo message="Downloading ivy..."/>
 	<get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" dest="${ivy.jar.file}" usetimestamp="true"/>
   </target>
