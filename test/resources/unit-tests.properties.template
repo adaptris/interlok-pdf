@@ -1,0 +1,21 @@
+# user-specific properties for unit tests
+# naming convention is <test class name>.<member name>
+
+# This file is imported directly into the build.xml before being re-written out as
+# unit-tests.properties.
+# the prefix junit. is used to allow easy filtering when writing out the properties
+# at jar creation time.
+
+
+junit.ConsumerCase.baseDir=${example-xml.build.dir}/consumers
+junit.ServiceCase.baseDir=${example-xml.build.dir}/services
+junit.ProducerCase.baseDir=${example-xml.build.dir}/producers
+
+junit.TransformServiceExamples.baseDir=${junit.ServiceCase.baseDir}/transformation-and-validation
+
+junit.FopTransformService.inputMessage=${basedir}/test/resources/fop/sample_input.fo
+junit.FopTransformService.outputMessage=${basedir}/test/resources/fop/sample_output.pdf
+
+
+
+

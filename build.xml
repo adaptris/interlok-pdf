@@ -1,0 +1,229 @@
+﻿<project basedir="." default="compile" name="msmq">
+	
+  <property file="build.properties"/>
+  <property file="ivy.properties"/>
+  <import file="${basedir}/../resources/ant-ivy-includes.xml"/> <!-- Ivy tasks -->
+	
+  <tstamp>
+    <format property="today" pattern="yyyy-MM-dd" locale="en"/>
+  </tstamp>
+
+  <target name="init">
+  	
+  	<property name="manifest.section.name" value="com/adaptris/msmq"/>
+  	<property name="manifest.title" value="Interlok MSMQ integration"/>
+  	<property name="manifest.vendor" value="Adaptris Ltd"/>
+  	
+    <property name="src.dir" value="${basedir}/src"/>
+    <property name="build-util.lib.dir"     value="${basedir}/../build-util"/>
+    <property name="local.dll.dir"     value="${basedir}/lib/x86"/>
+  	
+    <property name="testsrc.dir" value="${basedir}/test/src"/>
+    <property name="build.dir" value="${basedir}/build"/>
+    <property name="resources.dir" value="${basedir}/resources"/>
+    <property name="test.resources.dir" value="${basedir}/test/resources"/>
+    <property name="example-xml.build.dir"  value="${build.dir}/example-xml"/>
+    
+    <property name="classes.build.dir" value="${build.dir}/classes"/>
+    <property name="testclasses.build.dir" value="${build.dir}/testclasses"/>
+    <property name="doc.dir" value="${basedir}/docs"/>
+    <property name="api.doc.dir" value="${build.dir}/api"/>
+    <property name="tests.output.dir" value="${basedir}/testoutput"/>
+    <property name="html.tests.output.dir" value="${tests.output.dir}/html"/>
+    <property name="jar.version" value="${today}"/>
+    
+    <property name="javac.include.classes"  value="**/*.java" />
+    <property name="junit.test.classes"     value="**/*Test*.java" />
+    <patternset id="javac.exclude.sources">
+    </patternset>
+
+    <patternset id="junit.exclude.sources">
+    </patternset>
+    <patternset id="junit.exclude.tests">
+      <exclude name="**/AllTests.java"/>
+      <exclude name="**/stubs/*.java"/>
+    </patternset>
+
+    <property name="build.tmp.dir" value="${build.dir}/tmp"/>
+    <property name="jar.version"            value="${today}-${user.name}"/>
+    <property name="project.name"           value="adp-${ant.project.name}"/>
+
+    <property name="project.jar.name" value = "${project.name}.jar"/>
+
+    <property name="tmp.jar.name" value = "${project.name}-tmp.jar"/>
+    <property name="yguard.report" value="${build.dir}/${project.name}-${jar.version}.yguard.xml.gz"/>
+
+    <property name="xstream.mapping.file"           value="annotation.properties"/>
+    <property name="xstream.mapping.path"           value="xstream"/>
+    <property name="xstream.annotation.debug"       value="true"/>
+    <!-- Properties for CData annotation processing -->
+    <property name="cdata.mapping.file"           value="cdata.properties"/>
+    <property name="cdata.mapping.path"           value="xstream"/>
+    <property name="cdata.annotation.debug"       value="true"/>
+    <!-- properties for beaninfo generation -->
+    <property name="beaninfo.mapping.file"        value="javabeans.properties"/>
+    <property name="beaninfo.mapping.path"        value="xstream"/>
+    <property name="beaninfo.annotation.debug"    value="true"/>
+    
+  </target>
+
+<!-- clean -->
+  <target name="clean" depends="init" description="Remove build artifacts">
+    <delete dir="${build.dir}"/>
+  </target>
+
+  <target name="prepare" depends="init, prepare-ivy">
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${classes.build.dir}"/>
+    <mkdir dir="${testclasses.build.dir}"/>
+    <mkdir dir="${build.tmp.dir}"/>
+    <mkdir dir="${project.dist.dir}"/>
+  </target>
+
+  <target name="compile" depends="prepare" description="Compile">
+    <mkdir dir="${classes.build.dir}/META-INF/${xstream.mapping.path}"/>
+    <mkdir dir="${classes.build.dir}/META-INF/${cdata.mapping.path}"/>
+
+  	<property name="compile.classpath" refid="main.classpath"/>
+  	<echo message="XXX - ${compile.classpath}"/>
+    <javac source="1.5" target="1.5" destdir="${classes.build.dir}" srcdir="${src.dir}" debug="on" debuglevel="source,lines">
+      <classpath refid="main.classpath"/>
+      <compilerarg value="-AxstreamDebug=${xstream.annotation.debug}"/>
+      <compilerarg value="-AxstreamMappingFile=${classes.build.dir}/META-INF/${xstream.mapping.path}/${xstream.mapping.file}"/>
+      <compilerarg value="-AcdataDebug=${cdata.annotation.debug}"/>
+      <compilerarg value="-AcdataMappingFile=${classes.build.dir}/META-INF/${cdata.mapping.path}/${cdata.mapping.file}"/>
+      <compilerarg value="-AbeanInfoDebug=${beaninfo.annotation.debug}"/>
+      <compilerarg value="-AbeanInfoMappingFile=${classes.build.dir}/META-INF/${beaninfo.mapping.path}/${beaninfo.mapping.file}"/>    
+    </javac>
+  </target>
+
+  <target name="jar.resources" depends="prepare">
+    <!-- build the manifest file -->
+    <property name="manifest.jar.version" value="${jar.version}"/>
+    <manifest file="${build.dir}/Manifest.mf">
+      <attribute name="Manifest-Version" value="1.0"/>
+      <attribute name="Build-Version" value="${manifest.jar.version}"/>
+      <attribute name="Built-By" value="${user.name}"/>
+      <section name="${manifest.section.name}">
+        <attribute name="Specification-Title" value="${manifest.title}"/>
+        <attribute name="Specification-Version" value="${ivy.publish.revision}"/>
+        <attribute name="Specification-Vendor" value="${manifest.vendor}"/>
+        <attribute name="Implementation-Version" value="${ivy.publish.revision}"/>
+        <attribute name="Implementation-Title" value="${manifest.title}"/>
+        <attribute name="Implementation-Vendor" value="${manifest.vendor}"/>
+      </section>
+    </manifest>
+  </target>
+
+
+  <target name="jar" depends="compile, jar.resources" description="Build a jar file">
+    <jar basedir="${classes.build.dir}"
+         jarfile="${project.dist.dir}/${project.jar.name}"
+         manifest="${build.dir}/Manifest.mf" />
+
+  </target>
+
+  <target name="javadoc" depends="init" description="create javadocs">
+    <delete dir ="${api.doc.dir}" />
+    <mkdir dir ="${api.doc.dir}" />
+    <property name="echo.classpath" refid="main.classpath"/>
+    <javadoc author="false"
+                 destdir="${api.doc.dir}"
+                 sourcepath="${src.dir}"
+                 windowtitle="${manifest.title}"
+                 bottom="Copyright &#169; Adaptris"
+                 access="protected"
+                 additionalparam="-breakiterator">
+          <packageset dir="${src.dir}" defaultexcludes="yes"/>
+          <classpath>
+            <path refid="main.classpath"/>
+          </classpath>
+          <link offline="false" href="http://java.sun.com/j2se/1.5/docs/api/" />
+          <link offline="false" href="http://javadoc.iaik.tugraz.at/iaik_jce/current/" />
+          <link offline="false" href="http://commons.apache.org/logging/commons-logging-1.1/apidocs/" />
+          <link offline="false" href="http://development.adaptris.com/javadocs/latest-stable/"/>
+          <link offline="false" href="http://xerces.apache.org/xerces2-j/javadocs/api/"/>
+          <link offline="false" href="http://xml.apache.org/xalan-j/apidocs/"/>
+          <link offline="false" href="http://commons.apache.org/pool/api-1.3/"/>
+        </javadoc>
+  </target>
+
+  <!-- Perform a release -->
+  <target name="dist" depends="jar, javadoc" description="Create a distribution">
+    <mkdir dir="${build.tmp.dir}/dist/lib"/>
+    <mkdir dir="${project.dist.dir}"/>
+    <delete file="${dist.filename}"/>
+    <copy todir="${build.tmp.dir}/dist/lib" preservelastmodified="true" verbose="true">
+      <fileset dir="${project.dist.dir}">
+        <include name="${project.jar.name}" />
+      </fileset>
+    </copy>
+    <zip destfile="${dist.filename}">
+      <zipfileset dir="${build.tmp.dir}/dist/lib" prefix="lib"/>
+      <zipfileset dir="${api.doc.dir}" prefix="docs/${ant.project.name}/api"/>
+    </zip>
+  </target>
+
+  <target name="compile_tests" depends="compile, jar">
+    <mkdir dir="${testclasses.build.dir}"/>
+    <javac source="1.5" target="1.5" destdir="${testclasses.build.dir}" srcdir="${testsrc.dir}" debug="on" debuglevel="source,lines,vars">
+      <classpath id="classpath.compiletests">
+        <pathelement path="${classes.build.dir}"/>
+        <path refid="main.classpath"/>
+      </classpath>
+      <compilerarg value="-AxstreamDebug=${xstream.annotation.debug}"/>
+      <compilerarg value="-AxstreamMappingFile=${classes.build.dir}/META-INF/${xstream.mapping.path}/${xstream.mapping.file}"/>
+      <compilerarg value="-AcdataDebug=${cdata.annotation.debug}"/>
+      <compilerarg value="-AcdataMappingFile=${classes.build.dir}/META-INF/${cdata.mapping.path}/${cdata.mapping.file}"/>
+      <compilerarg value="-AbeanInfoDebug=${beaninfo.annotation.debug}"/>
+      <compilerarg value="-AbeanInfoMappingFile=${classes.build.dir}/META-INF/${beaninfo.mapping.path}/${beaninfo.mapping.file}"/>           
+    </javac>
+    <!-- Source our test property files, relying on ant property immutability.
+      -->
+    <property file="${test.resources.dir}/unit-tests.properties.template"/>
+    <echoproperties destfile="${testclasses.build.dir}/unit-tests.properties" prefix="junit."/>
+    <replace file="${testclasses.build.dir}/unit-tests.properties" token="junit." value=""/>
+  </target>
+
+
+  <target name="init.tests" depends="compile_tests">
+    <!-- clean up old reports -->
+    <delete dir="${tests.output.dir}"/>
+    <mkdir dir="${tests.output.dir}"/>
+    <mkdir dir="${html.tests.output.dir}"/>
+  </target>
+
+
+  <target name="test" depends="init.tests,junit" description="run tests">
+    <junitreport todir="${tests.output.dir}">
+      <fileset dir="${tests.output.dir}">
+        <include name="TEST-*.xml"/>
+      </fileset>
+      <report format="frames" todir="${html.tests.output.dir}"/>
+    </junitreport>
+    <fail message="JUNIT tests failed, check output in ${tests.output.dir}" if="junit.failed"/>
+  </target>
+
+  <target name="junit" depends="init.tests">
+    <junit printsummary="true" forkmode="once"  fork="yes" failureproperty="junit.failed">
+      <jvmarg value="-XX:-UseSplitVerifier"/>
+      <jvmarg value="-XX:+CMSClassUnloadingEnabled"/>
+      <jvmarg value="-XX:+UseConcMarkSweepGC"/>
+      <jvmarg value="-XX:+UseParNewGC"/>
+      <formatter type="xml"/>
+      <batchtest todir="${tests.output.dir}">
+        <fileset dir="${testsrc.dir}">
+          <include name="${junit.test.classes}"/>
+          <exclude name="${junit.test.exclude.classes}"/>
+          <exclude name="**/AllTests.java"/>
+        </fileset>
+      </batchtest>
+      <classpath id="classpath.runtests">
+        <path refid="main.classpath"/>        
+        <pathelement path="${classes.build.dir}"/>
+        <pathelement path="${testclasses.build.dir}"/>
+      </classpath>
+    </junit>
+  </target>
+
+</project>
