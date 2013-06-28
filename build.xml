@@ -88,12 +88,14 @@
   	<echo message="XXX - ${compile.classpath}"/>
     <javac source="1.5" target="1.5" destdir="${classes.build.dir}" srcdir="${src.dir}" debug="on" debuglevel="source,lines">
       <classpath refid="main.classpath"/>
+      <!--
       <compilerarg value="-AxstreamDebug=${xstream.annotation.debug}"/>
       <compilerarg value="-AxstreamMappingFile=${classes.build.dir}/META-INF/${xstream.mapping.path}/${xstream.mapping.file}"/>
       <compilerarg value="-AcdataDebug=${cdata.annotation.debug}"/>
       <compilerarg value="-AcdataMappingFile=${classes.build.dir}/META-INF/${cdata.mapping.path}/${cdata.mapping.file}"/>
       <compilerarg value="-AbeanInfoDebug=${beaninfo.annotation.debug}"/>
       <compilerarg value="-AbeanInfoMappingFile=${classes.build.dir}/META-INF/${beaninfo.mapping.path}/${beaninfo.mapping.file}"/>    
+      -->
     </javac>
   </target>
 
@@ -171,12 +173,14 @@
         <pathelement path="${classes.build.dir}"/>
         <path refid="main.classpath"/>
       </classpath>
+      <!--
       <compilerarg value="-AxstreamDebug=${xstream.annotation.debug}"/>
       <compilerarg value="-AxstreamMappingFile=${classes.build.dir}/META-INF/${xstream.mapping.path}/${xstream.mapping.file}"/>
       <compilerarg value="-AcdataDebug=${cdata.annotation.debug}"/>
       <compilerarg value="-AcdataMappingFile=${classes.build.dir}/META-INF/${cdata.mapping.path}/${cdata.mapping.file}"/>
       <compilerarg value="-AbeanInfoDebug=${beaninfo.annotation.debug}"/>
       <compilerarg value="-AbeanInfoMappingFile=${classes.build.dir}/META-INF/${beaninfo.mapping.path}/${beaninfo.mapping.file}"/>           
+      -->
     </javac>
     <!-- Source our test property files, relying on ant property immutability.
       -->

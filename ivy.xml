@@ -20,7 +20,7 @@
   </publications>
   <dependencies>
   	<dependency org="com.adaptris" name="adp-core" rev="${adp-core-version}" changing="true"/>
-  	<dependency org="com.adaptris" name="adp-apt" rev="${adp-core-version}"/>
+  	<dependency org="com.adaptris" name="adp-apt" rev="${adp-core-version}" changing="true"/>
   	<dependency org="com.adaptris" name="adp-stubs" rev="${adp-core-version}" changing="true"/>
     <!-- Without transitive, all velocities deps will be included, which will break us cos ant 1.6 will also be included. -->    
   	<dependency org="org.apache.velocity" name="velocity" rev="1.7" transitive="false"/>     
