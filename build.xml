@@ -1,29 +1,29 @@
 ﻿<project basedir="." default="compile" name="msmq">
-	
+
   <property file="build.properties"/>
   <property file="ivy.properties"/>
   <import file="${basedir}/../resources/ant-ivy-includes.xml"/> <!-- Ivy tasks -->
-	
+
   <tstamp>
     <format property="today" pattern="yyyy-MM-dd" locale="en"/>
   </tstamp>
 
   <target name="init">
-  	
+
   	<property name="manifest.section.name" value="com/adaptris/msmq"/>
   	<property name="manifest.title" value="Interlok MSMQ integration"/>
   	<property name="manifest.vendor" value="Adaptris Ltd"/>
-  	
+
     <property name="src.dir" value="${basedir}/src"/>
     <property name="build-util.lib.dir"     value="${basedir}/../build-util"/>
     <property name="local.dll.dir"     value="${basedir}/lib/x86"/>
-  	
+
     <property name="testsrc.dir" value="${basedir}/test/src"/>
     <property name="build.dir" value="${basedir}/build"/>
     <property name="resources.dir" value="${basedir}/resources"/>
     <property name="test.resources.dir" value="${basedir}/test/resources"/>
     <property name="example-xml.build.dir"  value="${build.dir}/example-xml"/>
-    
+
     <property name="classes.build.dir" value="${build.dir}/classes"/>
     <property name="testclasses.build.dir" value="${build.dir}/testclasses"/>
     <property name="doc.dir" value="${basedir}/docs"/>
@@ -31,7 +31,7 @@
     <property name="tests.output.dir" value="${basedir}/testoutput"/>
     <property name="html.tests.output.dir" value="${tests.output.dir}/html"/>
     <property name="jar.version" value="${today}"/>
-    
+
     <property name="javac.include.classes"  value="**/*.java" />
     <property name="junit.test.classes"     value="**/*Test*.java" />
     <patternset id="javac.exclude.sources">
@@ -64,7 +64,7 @@
     <property name="beaninfo.mapping.file"        value="javabeans.properties"/>
     <property name="beaninfo.mapping.path"        value="xstream"/>
     <property name="beaninfo.annotation.debug"    value="true"/>
-    
+
   </target>
 
 <!-- clean -->
@@ -84,18 +84,10 @@
     <mkdir dir="${classes.build.dir}/META-INF/${xstream.mapping.path}"/>
     <mkdir dir="${classes.build.dir}/META-INF/${cdata.mapping.path}"/>
 
-  	<property name="compile.classpath" refid="main.classpath"/>
-  	<echo message="XXX - ${compile.classpath}"/>
+    <property name="compile.classpath" refid="main.classpath"/>
+    <echo level="verbose" message="---Ivy Resolved Classpath - ${compile.classpath}"/>
     <javac source="1.5" target="1.5" destdir="${classes.build.dir}" srcdir="${src.dir}" debug="on" debuglevel="source,lines">
       <classpath refid="main.classpath"/>
-      <!--
-      <compilerarg value="-AxstreamDebug=${xstream.annotation.debug}"/>
-      <compilerarg value="-AxstreamMappingFile=${classes.build.dir}/META-INF/${xstream.mapping.path}/${xstream.mapping.file}"/>
-      <compilerarg value="-AcdataDebug=${cdata.annotation.debug}"/>
-      <compilerarg value="-AcdataMappingFile=${classes.build.dir}/META-INF/${cdata.mapping.path}/${cdata.mapping.file}"/>
-      <compilerarg value="-AbeanInfoDebug=${beaninfo.annotation.debug}"/>
-      <compilerarg value="-AbeanInfoMappingFile=${classes.build.dir}/META-INF/${beaninfo.mapping.path}/${beaninfo.mapping.file}"/>    
-      -->
     </javac>
   </target>
 
@@ -179,7 +171,7 @@
       <compilerarg value="-AcdataDebug=${cdata.annotation.debug}"/>
       <compilerarg value="-AcdataMappingFile=${classes.build.dir}/META-INF/${cdata.mapping.path}/${cdata.mapping.file}"/>
       <compilerarg value="-AbeanInfoDebug=${beaninfo.annotation.debug}"/>
-      <compilerarg value="-AbeanInfoMappingFile=${classes.build.dir}/META-INF/${beaninfo.mapping.path}/${beaninfo.mapping.file}"/>           
+      <compilerarg value="-AbeanInfoMappingFile=${classes.build.dir}/META-INF/${beaninfo.mapping.path}/${beaninfo.mapping.file}"/>
       -->
     </javac>
     <!-- Source our test property files, relying on ant property immutability.
@@ -223,7 +215,7 @@
         </fileset>
       </batchtest>
       <classpath id="classpath.runtests">
-        <path refid="main.classpath"/>        
+        <path refid="main.classpath"/>
         <pathelement path="${classes.build.dir}"/>
         <pathelement path="${testclasses.build.dir}"/>
       </classpath>
