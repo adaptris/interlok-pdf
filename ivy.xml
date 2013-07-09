@@ -18,7 +18,7 @@
   <dependencies>
   	<dependency org="com.adaptris" name="adp-core" rev="${adp-core-version}" changing="true"/>
   	<dependency org="com.adaptris" name="adp-apt" rev="${adp-core-version}" changing="true"/>
-  	<dependency org="com.adaptris" name="adp-stubs" rev="${adp-core-version}" changing="true"/>
+  	<dependency org="com.adaptris" name="adp-stubs" rev="${adp-core-version}" changing="true" conf="test->default"/>
     <!-- Without transitive, all velocities deps will be included, which will break us cos ant 1.6 will also be included. -->
   	<dependency org="org.apache.velocity" name="velocity" rev="1.7" transitive="false"/>
     <!-- OK, So this is actually quite dirty, avalon-framework 4.2 doesn't exist as a download anyway, so we set fop to be transitive=false so it
