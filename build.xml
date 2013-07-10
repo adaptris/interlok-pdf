@@ -201,7 +201,7 @@
   </target>
 
   <target name="junit" depends="init.tests">
-    <junit printsummary="true" forkmode="once"  fork="yes" failureproperty="junit.failed">
+    <junit printsummary="true" fork="yes" failureproperty="junit.failed" showoutput="no" forkmode="once">
       <jvmarg value="-XX:-UseSplitVerifier"/>
       <jvmarg value="-XX:+CMSClassUnloadingEnabled"/>
       <jvmarg value="-XX:+UseConcMarkSweepGC"/>
