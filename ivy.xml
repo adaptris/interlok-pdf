@@ -10,14 +10,17 @@
 	  <conf name="runtime" visibility="public" description="this scope indicates that the dependency is not required for compilation, but is for execution. It is in the runtime and test classpaths, but not the compile classpath." extends="compile"/>
 	  <conf name="test" visibility="private" description="this scope indicates that the dependency is not required for normal use of the application, and is only available for the test compilation and execution phases." extends="runtime"/>
 	  <conf name="system" visibility="public" description="this scope is similar to provided except that you have to provide the JAR which contains it explicitly. The artifact is always available and is not looked up in a repository."/>
+	  <conf name="sources" visibility="public" description="this configuration contains the source artifact of this module, if any."/>
+	  <conf name="javadoc" visibility="public" description="this configuration contains the javadoc artifact of this module, if any."/>
+  	<conf name="optional" visibility="public" description="contains all optional dependencies"/>   
   </configurations>
   <publications>
      <artifact name="adp-fop" type="jar" ext="jar"/>
      <artifact name="adp-fop" type="pom" ext="pom"/>
   </publications>
   <dependencies>
-  	<dependency org="com.adaptris" name="adp-core" rev="${adp-core-version}" changing="true"/>
-  	<dependency org="com.adaptris" name="adp-apt" rev="${adp-core-version}" changing="true"/>
+  	<dependency org="com.adaptris" name="adp-core" rev="${adp-core-version}" conf="*->*,!sources,!javadoc" changing="true"/>
+    <dependency org="com.adaptris" name="adp-apt" rev="${adp-core-version}" conf="compile->compile" changing="true"/>
   	<dependency org="com.adaptris" name="adp-stubs" rev="${adp-core-version}" changing="true" conf="test->default"/>
     <!-- Without transitive, all velocities deps will be included, which will break us cos ant 1.6 will also be included. -->
   	<dependency org="org.apache.velocity" name="velocity" rev="1.7" transitive="false"/>
