@@ -101,45 +101,13 @@
   </target>
 
   <target name="javadoc" depends="prepare-ivy" description="Create javadocs">
-    <delete dir ="${api.doc.dir}" />
-    <mkdir dir ="${api.doc.dir}" />
-    <if>
-      <and>
-        <isset property="ydoc.dir"/>
-        <available file="${ydoc.dir}" type="dir"/>
-      </and>
-      <then>
-        <adapter:create-javadocs sourcepath="${src.dir}" destdir="${api.doc.dir}">
-          <ydoc-doclet>
-            <doclet name="ydoc.doclets.YStandard"
-              path="${ydoc.dir}/lib/ydoc.jar:${ydoc.dir}/resources:${ydoc.dir}/doc">
-              <param name="-generic"/>
-              <param name="-umlpackagegen"/>
-              <param name="-umltypegen"/>
-              <param name="-filterpath" value="${ydoc.dir}/lib/ydoc.jar"/>
-              <param name="-filter"     value="ydoc.filters.ExcludeFilter"/>
-              <param name="-tag" value="y.precondition"/>
-              <param name="-tag" value="y.postcondition"/>
-              <param name="-tag" value="y.complexity"/>
-              <param name="-tag" value="param"/>
-              <param name="-tag" value="return"/>
-              <param name="-tag" value="see"/>
-              <param name="-tag" value="y.uml"/>
-            </doclet>
-          </ydoc-doclet>
-          <grouping>
+    <adapter:ydoc-javadoc-creator sourcepath="${src.dir}" destdir="${api.doc.dir}">
+      <groups>
+        <grouping>
             <group title="Interlok PDF Transformation" packages="com.adaptris.core.transform.pdf:com.adaptris.core.transform.pdf.*"/>
-          </grouping>
-        </adapter:create-javadocs>
-      </then>
-      <else>
-        <adapter:create-javadocs sourcepath="${src.dir}" destdir="${api.doc.dir}">
-          <grouping>
-            <group title="Interlok PDF Transformation" packages="com.adaptris.core.transform.pdf:com.adaptris.core.transform.pdf.*"/>
-          </grouping>
-        </adapter:create-javadocs>
-      </else>
-    </if>
+        </grouping>
+      </groups>
+    </adapter:ydoc-javadoc-creator>  
   </target>
 
   <!-- Perform a release -->
