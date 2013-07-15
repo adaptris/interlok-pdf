@@ -1,4 +1,4 @@
-﻿<project basedir="." default="compile" name="msmq">
+﻿<project basedir="." default="compile" name="fop" xmlns:adapter="uri:adapter" xmlns:ivy="antlib:org.apache.ivy.ant">
 
   <property file="build.properties"/>
   <property file="ivy.properties"/>
@@ -10,13 +10,11 @@
 
   <target name="init">
 
-  	<property name="manifest.section.name" value="com/adaptris/msmq"/>
-  	<property name="manifest.title" value="Interlok MSMQ integration"/>
-  	<property name="manifest.vendor" value="Adaptris Ltd"/>
+    <property name="manifest.section.name" value="com/adaptris/core/transform/fop"/>
+    <property name="manifest.title" value="Interlok PDF Transformations"/>
+    <property name="manifest.vendor" value="Adaptris Ltd"/>
 
     <property name="src.dir" value="${basedir}/src"/>
-    <property name="build-util.lib.dir"     value="${basedir}/../build-util"/>
-    <property name="local.dll.dir"     value="${basedir}/lib/x86"/>
 
     <property name="testsrc.dir" value="${basedir}/test/src"/>
     <property name="build.dir" value="${basedir}/build"/>
@@ -53,18 +51,6 @@
     <property name="tmp.jar.name" value = "${project.name}-tmp.jar"/>
     <property name="yguard.report" value="${build.dir}/${project.name}-${jar.version}.yguard.xml.gz"/>
 
-    <property name="xstream.mapping.file"           value="annotation.properties"/>
-    <property name="xstream.mapping.path"           value="xstream"/>
-    <property name="xstream.annotation.debug"       value="true"/>
-    <!-- Properties for CData annotation processing -->
-    <property name="cdata.mapping.file"           value="cdata.properties"/>
-    <property name="cdata.mapping.path"           value="xstream"/>
-    <property name="cdata.annotation.debug"       value="true"/>
-    <!-- properties for beaninfo generation -->
-    <property name="beaninfo.mapping.file"        value="javabeans.properties"/>
-    <property name="beaninfo.mapping.path"        value="xstream"/>
-    <property name="beaninfo.annotation.debug"    value="true"/>
-
   </target>
 
 <!-- clean -->
@@ -83,11 +69,6 @@
   </target>
 
   <target name="compile" depends="prepare" description="Compile">
-    <mkdir dir="${classes.build.dir}/META-INF/${xstream.mapping.path}"/>
-    <mkdir dir="${classes.build.dir}/META-INF/${cdata.mapping.path}"/>
-
-    <property name="compile.classpath" refid="main.classpath"/>
-    <echo level="verbose" message="---Ivy Resolved Classpath - ${compile.classpath}"/>
     <javac source="1.5" target="1.5" destdir="${classes.build.dir}" srcdir="${src.dir}" debug="on" debuglevel="source,lines">
       <classpath refid="main.classpath"/>
     </javac>
@@ -119,29 +100,46 @@
 
   </target>
 
-  <target name="javadoc" depends="init" description="create javadocs">
+  <target name="javadoc" depends="prepare-ivy" description="Create javadocs">
     <delete dir ="${api.doc.dir}" />
     <mkdir dir ="${api.doc.dir}" />
-    <property name="echo.classpath" refid="main.classpath"/>
-    <javadoc author="false"
-                 destdir="${api.doc.dir}"
-                 sourcepath="${src.dir}"
-                 windowtitle="${manifest.title}"
-                 bottom="Copyright &#169; Adaptris"
-                 access="protected"
-                 additionalparam="-breakiterator">
-          <packageset dir="${src.dir}" defaultexcludes="yes"/>
-          <classpath>
-            <path refid="main.classpath"/>
-          </classpath>
-          <link offline="false" href="http://java.sun.com/j2se/1.5/docs/api/" />
-          <link offline="false" href="http://javadoc.iaik.tugraz.at/iaik_jce/current/" />
-          <link offline="false" href="http://commons.apache.org/logging/commons-logging-1.1/apidocs/" />
-          <link offline="false" href="http://development.adaptris.com/javadocs/latest-stable/"/>
-          <link offline="false" href="http://xerces.apache.org/xerces2-j/javadocs/api/"/>
-          <link offline="false" href="http://xml.apache.org/xalan-j/apidocs/"/>
-          <link offline="false" href="http://commons.apache.org/pool/api-1.3/"/>
-        </javadoc>
+    <if>
+      <and>
+        <isset property="ydoc.dir"/>
+        <available file="${ydoc.dir}" type="dir"/>
+      </and>
+      <then>
+        <adapter:create-javadocs sourcepath="${src.dir}" destdir="${api.doc.dir}">
+          <ydoc-doclet>
+            <doclet name="ydoc.doclets.YStandard"
+              path="${ydoc.dir}/lib/ydoc.jar:${ydoc.dir}/resources:${ydoc.dir}/doc">
+              <param name="-generic"/>
+              <param name="-umlpackagegen"/>
+              <param name="-umltypegen"/>
+              <param name="-filterpath" value="${ydoc.dir}/lib/ydoc.jar"/>
+              <param name="-filter"     value="ydoc.filters.ExcludeFilter"/>
+              <param name="-tag" value="y.precondition"/>
+              <param name="-tag" value="y.postcondition"/>
+              <param name="-tag" value="y.complexity"/>
+              <param name="-tag" value="param"/>
+              <param name="-tag" value="return"/>
+              <param name="-tag" value="see"/>
+              <param name="-tag" value="y.uml"/>
+            </doclet>
+          </ydoc-doclet>
+          <grouping>
+            <group title="Interlok PDF Transformation" packages="com.adaptris.core.transform.pdf:com.adaptris.core.transform.pdf.*"/>
+          </grouping>
+        </adapter:create-javadocs>
+      </then>
+      <else>
+        <adapter:create-javadocs sourcepath="${src.dir}" destdir="${api.doc.dir}">
+          <grouping>
+            <group title="Interlok PDF Transformation" packages="com.adaptris.core.transform.pdf:com.adaptris.core.transform.pdf.*"/>
+          </grouping>
+        </adapter:create-javadocs>
+      </else>
+    </if>
   </target>
 
   <!-- Perform a release -->
@@ -167,14 +165,6 @@
         <pathelement path="${classes.build.dir}"/>
         <path refid="main.classpath"/>
       </classpath>
-      <!--
-      <compilerarg value="-AxstreamDebug=${xstream.annotation.debug}"/>
-      <compilerarg value="-AxstreamMappingFile=${classes.build.dir}/META-INF/${xstream.mapping.path}/${xstream.mapping.file}"/>
-      <compilerarg value="-AcdataDebug=${cdata.annotation.debug}"/>
-      <compilerarg value="-AcdataMappingFile=${classes.build.dir}/META-INF/${cdata.mapping.path}/${cdata.mapping.file}"/>
-      <compilerarg value="-AbeanInfoDebug=${beaninfo.annotation.debug}"/>
-      <compilerarg value="-AbeanInfoMappingFile=${classes.build.dir}/META-INF/${beaninfo.mapping.path}/${beaninfo.mapping.file}"/>
-      -->
     </javac>
     <!-- Source our test property files, relying on ant property immutability.
       -->
