@@ -1,7 +1,6 @@
 package com.adaptris.core.transform.pdf;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.adaptris.annotation.MarshallingImperative;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -32,7 +31,6 @@ import com.adaptris.core.ServiceImp;
  * </p>
  */
 @XStreamAlias("fop-transform-service")
-@MarshallingImperative(mapTo="fop-transform-service", transientFields={})
 public class FopTransformService extends ServiceImp {
 
   // marshalled
