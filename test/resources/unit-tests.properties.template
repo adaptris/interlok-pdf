@@ -7,11 +7,7 @@
 # at jar creation time.
 
 
-junit.ConsumerCase.baseDir=${example-xml.build.dir}/consumers
-junit.ServiceCase.baseDir=${example-xml.build.dir}/services
-junit.ProducerCase.baseDir=${example-xml.build.dir}/producers
-
-junit.TransformServiceExamples.baseDir=${junit.ServiceCase.baseDir}/transformation-and-validation
+junit.TransformServiceExamples.baseDir=${example-xml.build.dir}
 
 junit.FopTransformService.inputMessage=${basedir}/test/resources/fop/sample_input.fo
 junit.FopTransformService.outputMessage=${basedir}/test/resources/fop/sample_output.pdf
