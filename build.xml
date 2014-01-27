@@ -32,6 +32,7 @@
 
     <property name="javac.include.classes"  value="**/*.java" />
     <property name="junit.test.classes"     value="**/*Test*.java" />
+    <property name="javac.target.version"    value="1.7"/>
     <patternset id="javac.exclude.sources">
     </patternset>
 
@@ -73,7 +74,7 @@
   </target>
 
   <target name="compile" depends="prepare" description="Compile">
-    <javac source="1.5" target="1.5" destdir="${classes.build.dir}" srcdir="${src.dir}" debug="on" debuglevel="source,lines">
+    <javac source="${javac.target.version}" target="${javac.target.version}" destdir="${classes.build.dir}" srcdir="${src.dir}" debug="on" debuglevel="source,lines">
       <classpath refid="main.classpath"/>
     </javac>
   </target>
@@ -127,7 +128,7 @@
 
   <target name="compile_tests" depends="compile, jar">
     <mkdir dir="${testclasses.build.dir}"/>
-    <javac source="1.5" target="1.5" destdir="${testclasses.build.dir}" srcdir="${testsrc.dir}" debug="on" debuglevel="source,lines,vars">
+    <javac source="${javac.target.version}" target="${javac.target.version}" destdir="${testclasses.build.dir}" srcdir="${testsrc.dir}" debug="on" debuglevel="source,lines,vars">
       <classpath id="classpath.compiletests">
         <pathelement path="${classes.build.dir}"/>
         <path refid="main.classpath"/>
