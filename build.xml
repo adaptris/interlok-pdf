@@ -59,9 +59,8 @@
     <delete dir="${build.dir}"/>
     <delete dir="${tests.output.dir}"/>
     <delete>
-      <fileset dir="${basedir}">
-        <include name="cobertura.ser"/>
-      </fileset>
+      <fileset file="${coverage.metadata.file}"/>
+
     </delete>
   </target>
 
