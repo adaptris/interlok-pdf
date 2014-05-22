@@ -1,7 +1,5 @@
 package com.adaptris.core.transform.pdf;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -22,12 +20,18 @@ import com.adaptris.core.AdaptrisMessage;
 import com.adaptris.core.CoreException;
 import com.adaptris.core.ServiceException;
 import com.adaptris.core.ServiceImp;
+import com.adaptris.util.license.License;
+import com.adaptris.util.license.License.LicenseType;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * Transform service based on the Apache Fop project - http://xmlgraphics.apache.org/fop/
  * <p>
  * In the adapter configuration file this class is aliased as <b>fop-transform-service</b> which is the preferred alternative to the
  * fully qualified classname when building your configuration.
+ * </p>
+ * <p>
+ * Requires a Standard License
  * </p>
  */
 @XStreamAlias("fop-transform-service")
@@ -97,5 +101,10 @@ public class FopTransformService extends ServiceImp {
       throw new IllegalArgumentException("null or empty param");
     }
     this.outputFormat = s;
+  }
+
+  @Override
+  public boolean isEnabled(License license) throws CoreException {
+    return license.isEnabled(LicenseType.Standard);
   }
 }
