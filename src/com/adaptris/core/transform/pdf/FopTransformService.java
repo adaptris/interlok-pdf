@@ -26,13 +26,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * Transform service based on the Apache Fop project - http://xmlgraphics.apache.org/fop/
- * <p>
- * In the adapter configuration file this class is aliased as <b>fop-transform-service</b> which is the preferred alternative to the
- * fully qualified classname when building your configuration.
- * </p>
- * <p>
- * Requires a Standard License
- * </p>
+ * 
+ * @config fop-transform-service
+ * @license BASIC
  */
 @XStreamAlias("fop-transform-service")
 public class FopTransformService extends ServiceImp {
@@ -105,6 +101,6 @@ public class FopTransformService extends ServiceImp {
 
   @Override
   public boolean isEnabled(License license) throws CoreException {
-    return license.isEnabled(LicenseType.Standard);
+    return license.isEnabled(LicenseType.Basic);
   }
 }
