@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ivy-module version="2.0">
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
   <info organisation="com.adaptris" module="adp-fop" revision="${ivy.publish.revision}" status="release"/>
 
   <configurations>
@@ -22,6 +22,7 @@
      <artifact name="adp-fop" type="pom" ext="pom"/>
      <artifact name="adp-fop-javadoc" type="javadoc" ext="zip" conf="javadoc"/>
      <artifact name="adp-fop-examples" type="examples" ext="zip" conf="examples"/>
+     <artifact type="javadoc" ext="jar" conf="javadoc" m:classifier="javadoc"/>
 
   </publications>
   <dependencies>
