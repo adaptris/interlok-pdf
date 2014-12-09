@@ -76,7 +76,7 @@
 
   <target name="jar.resources" depends="prepare">
     <!-- build the manifest file -->
-    <adapter:create-manifest file="${build.dir}/Manifest.mf" title="Interlok/JBoss Rules Integration"/>
+    <adapter:create-manifest file="${build.dir}/Manifest.mf" title="Interlok PDF Transformations"/>
 
   </target>
 
