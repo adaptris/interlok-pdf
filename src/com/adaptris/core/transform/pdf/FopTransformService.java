@@ -15,7 +15,9 @@ import org.apache.commons.io.IOUtils;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
+import org.hibernate.validator.constraints.NotBlank;
 
+import com.adaptris.annotation.AutoPopulated;
 import com.adaptris.core.AdaptrisMessage;
 import com.adaptris.core.CoreException;
 import com.adaptris.core.ServiceException;
@@ -34,6 +36,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public class FopTransformService extends ServiceImp {
 
   // marshalled
+  @NotBlank
+  @AutoPopulated
   private String outputFormat;
 
   // castor transient
