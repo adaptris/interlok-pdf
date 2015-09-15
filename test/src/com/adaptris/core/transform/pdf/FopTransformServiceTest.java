@@ -3,13 +3,9 @@ package com.adaptris.core.transform.pdf;
 import java.io.File;
 import java.io.FileInputStream;
 
-import com.adaptris.core.AdaptrisMarshaller;
 import com.adaptris.core.AdaptrisMessage;
 import com.adaptris.core.AdaptrisMessageFactory;
-import com.adaptris.core.DefaultMarshaller;
-import com.adaptris.core.Service;
 import com.adaptris.core.transform.TransformServiceExample;
-import com.adaptris.core.transform.pdf.FopTransformService;
 
 public class FopTransformServiceTest extends TransformServiceExample {
 
@@ -47,13 +43,5 @@ public class FopTransformServiceTest extends TransformServiceExample {
   @Override
   protected Object retrieveObjectForSampleConfig() {
     return service;
-  }
-
-  @Override
-  public void testXmlRoundTrip() throws Exception {
-    AdaptrisMarshaller m = DefaultMarshaller.getDefaultMarshaller();
-    String xml = m.marshal(service);
-    Service unmarshalledService = (FopTransformService) m.unmarshal(xml);
-    assertRoundtripEquality(service, unmarshalledService);
   }
 }
