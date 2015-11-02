@@ -53,9 +53,10 @@
     <dependency org="org.apache.xmlgraphics" name="batik-xml" rev="1.7" transitive="false" conf="compile->default" />
     <dependency org="commons-io" name="commons-io" rev="1.3.1" conf="compile->default" />
     <dependency org="org.apache.velocity" name="velocity" rev="1.7" transitive="false" conf="compile->default"/>
-    <dependency org="org.slf4j" name="slf4j-api" rev="1.7.5" conf="compile->default" />
-    <dependency org="org.slf4j" name="jcl-over-slf4j" rev="1.7.5" conf="compile->default" />
-    <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.7.5" conf="compile->default"/>
+    <dependency org="org.slf4j" name="slf4j-api" rev="1.7.12" conf="compile->default" />
+    <dependency org="org.slf4j" name="jcl-over-slf4j" rev="1.7.12" conf="optional->default" />
+    <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.7.12" conf="optional->default"/>
+    <dependency org="log4j" name="log4j" rev="1.2.17" force="true" conf="test->default;ant->default"/>
 
     <!-- For Various ANT Tasks -->
     <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="ant->default" transitive="false"/>
@@ -67,7 +68,6 @@
 
 
     <dependency org="junit" name="junit" rev="4.11" conf="test->default"/>
-    <dependency org="log4j" name="log4j" rev="1.2.17" conf="runtime->default"/>
     <dependency org="org.mockito" name="mockito-all" rev="1.9.5" conf="test->default"/>
     <dependency org="com.adaptris" name="code-signing" rev="2017-RELEASE" conf="signing->default"/>
 
