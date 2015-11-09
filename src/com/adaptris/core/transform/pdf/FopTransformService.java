@@ -21,9 +21,10 @@ import com.adaptris.annotation.AutoPopulated;
 import com.adaptris.core.AdaptrisMessage;
 import com.adaptris.core.CoreException;
 import com.adaptris.core.ServiceException;
-import com.adaptris.core.ServiceImp;
-import com.adaptris.util.license.License;
-import com.adaptris.util.license.License.LicenseType;
+import com.adaptris.core.licensing.License;
+import com.adaptris.core.licensing.License.LicenseType;
+import com.adaptris.core.licensing.LicenseChecker;
+import com.adaptris.core.licensing.LicensedService;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -33,7 +34,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * @license BASIC
  */
 @XStreamAlias("fop-transform-service")
-public class FopTransformService extends ServiceImp {
+public class FopTransformService extends LicensedService {
 
   // marshalled
   @NotBlank
@@ -50,15 +51,16 @@ public class FopTransformService extends ServiceImp {
     this.setOutputFormat(MimeConstants.MIME_PDF);
   }
 
-  /** @see com.adaptris.core.AdaptrisComponent#init() */
-  public void init() throws CoreException {
+  protected void initService() throws CoreException {
     try {
       transformer = TransformerFactory.newInstance().newTransformer();
     }
     catch (TransformerConfigurationException e) {
-      throw new ServiceException(e);
+      throw new CoreException(e);
     }
   }
+
+  protected void closeService() {}
 
   /** @see com.adaptris.core.Service#doService(com.adaptris.core.AdaptrisMessage) */
   public void doService(AdaptrisMessage msg) throws ServiceException {
@@ -85,11 +87,6 @@ public class FopTransformService extends ServiceImp {
     }
   }
 
-  /** @see com.adaptris.core.AdaptrisComponent#close() */
-  public void close() {
-    // n/a...
-  }
-
   // properties
 
   public String getOutputFormat() {
@@ -104,7 +101,12 @@ public class FopTransformService extends ServiceImp {
   }
 
   @Override
-  public boolean isEnabled(License license) throws CoreException {
+  protected void prepareService() throws CoreException {
+    LicenseChecker.newChecker().checkLicense(this);
+  }
+
+  @Override
+  public boolean isEnabled(License license) {
     return license.isEnabled(LicenseType.Basic);
   }
 }
