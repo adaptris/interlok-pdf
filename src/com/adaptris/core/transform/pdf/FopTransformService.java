@@ -17,7 +17,9 @@ import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.adaptris.annotation.AdapterComponent;
 import com.adaptris.annotation.AutoPopulated;
+import com.adaptris.annotation.ComponentProfile;
 import com.adaptris.core.AdaptrisMessage;
 import com.adaptris.core.CoreException;
 import com.adaptris.core.ServiceException;
@@ -34,6 +36,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * @license BASIC
  */
 @XStreamAlias("fop-transform-service")
+@AdapterComponent
+@ComponentProfile(summary = "Transform into a PDF using Apache Fop", tag = "service,transform,xml,pdf")
 public class FopTransformService extends LicensedService {
 
   // marshalled
