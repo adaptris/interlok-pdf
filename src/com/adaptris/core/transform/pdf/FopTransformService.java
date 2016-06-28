@@ -23,10 +23,7 @@ import com.adaptris.annotation.ComponentProfile;
 import com.adaptris.core.AdaptrisMessage;
 import com.adaptris.core.CoreException;
 import com.adaptris.core.ServiceException;
-import com.adaptris.core.licensing.License;
-import com.adaptris.core.licensing.License.LicenseType;
-import com.adaptris.core.licensing.LicenseChecker;
-import com.adaptris.core.licensing.LicensedService;
+import com.adaptris.core.ServiceImp;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -38,7 +35,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("fop-transform-service")
 @AdapterComponent
 @ComponentProfile(summary = "Transform into a PDF using Apache Fop", tag = "service,transform,xml,pdf")
-public class FopTransformService extends LicensedService {
+public class FopTransformService extends ServiceImp {
 
   // marshalled
   @NotBlank
@@ -105,12 +102,6 @@ public class FopTransformService extends LicensedService {
   }
 
   @Override
-  protected void prepareService() throws CoreException {
-    LicenseChecker.newChecker().checkLicense(this);
-  }
+  public void prepare() throws CoreException {}
 
-  @Override
-  public boolean isEnabled(License license) {
-    return license.isEnabled(LicenseType.Basic);
-  }
 }
