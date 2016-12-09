@@ -47,6 +47,7 @@
     <property name="project.name"           value="adp-${ant.project.name}"/>
 
     <property name="project.jar.name" value = "${project.name}.jar"/>
+    <property name="project.pom.description" value="${manifest.title}"/>
 
     <property name="tmp.jar.name" value = "${project.name}-tmp.jar"/>
     <property name="yguard.report" value="${build.dir}/${project.name}-${jar.version}.yguard.xml.gz"/>
