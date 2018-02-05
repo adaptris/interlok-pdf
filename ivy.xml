@@ -20,9 +20,10 @@
   <publications>
      <artifact name="adp-fop" type="jar" ext="jar"/>
      <artifact name="adp-fop" type="pom" ext="pom"/>
-     <artifact name="adp-fop-javadoc" type="javadoc" ext="zip" conf="javadoc"/>
-     <artifact name="adp-fop-examples" type="examples" ext="zip" conf="examples"/>
+
+
      <artifact type="javadoc" ext="jar" conf="javadoc" m:classifier="javadoc"/>
+     <artifact type="examples" ext="jar" conf="examples" m:classifier="examples"/>
 
   </publications>
   <dependencies>
@@ -62,7 +63,7 @@
     <!-- For Various ANT Tasks -->
     <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="ant->default" transitive="false"/>
     <dependency org="com.yworks"  name="yguard" rev="2.5.2" conf="ant->default" transitive="false"/>
-    <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.7.7.201606060606" conf="ant->default"/>
+    <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.7.9" conf="ant->default"/>
     <!--
     <dependency org="com.google.code.findbugs" name="findbugs" rev="2.0.1" conf="ant"/>
     -->
