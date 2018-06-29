@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
-  <info organisation="com.adaptris" module="adp-fop" revision="${ivy.publish.revision}" status="release"/>
+  <info organisation="com.adaptris" module="interlok-pdf" revision="${ivy.publish.revision}" status="release"/>
 
   <configurations>
     <conf name="default" visibility="public" description="runtime dependencies and master artifact can be used with this conf" extends="runtime,master"/>
@@ -18,8 +18,8 @@
     <conf name="signing" visibility="private" description="Scope for downloading the signing information"/>
   </configurations>
   <publications>
-     <artifact name="adp-fop" type="jar" ext="jar"/>
-     <artifact name="adp-fop" type="pom" ext="pom"/>
+     <artifact name="interlok-pdf" type="jar" ext="jar"/>
+     <artifact name="interlok-pdf" type="pom" ext="pom"/>
 
 
      <artifact type="javadoc" ext="jar" conf="javadoc" m:classifier="javadoc"/>
@@ -27,10 +27,10 @@
 
   </publications>
   <dependencies>
-    <dependency org="com.adaptris" name="adp-core" rev="${adp-core-version}" conf="compile->default;javadoc->javadoc" changing="true"/>
-    <dependency org="com.adaptris" name="interlok-common" rev="${adp-core-version}" conf="compile->default;javadoc->javadoc" changing="true"/>
-    <dependency org="com.adaptris" name="adp-stubs" rev="${adp-core-version}" changing="true" conf="test->default"/>
-    <dependency org="com.adaptris" name="adp-core-apt" rev="${adp-core-version}" conf="compile->default;ant->default" changing="true"/>
+    <dependency org="com.adaptris" name="interlok-core" rev="${interlok-core-version}" conf="compile->default;javadoc->javadoc" changing="true"/>
+    <dependency org="com.adaptris" name="interlok-common" rev="${interlok-core-version}" conf="compile->default;javadoc->javadoc" changing="true"/>
+    <dependency org="com.adaptris" name="interlok-stubs" rev="${interlok-core-version}" changing="true" conf="test->default"/>
+    <dependency org="com.adaptris" name="interlok-core-apt" rev="${interlok-core-version}" conf="compile->default;ant->default" changing="true"/>
     <!-- OK, So this is actually quite dirty, avalon-framework 4.2 doesn't exist as a download anyway, so we set fop to be transitive=false so it
          doesn't try to get the schnizzle that it depends on and we formally include all of it's dependencies.
     -->
