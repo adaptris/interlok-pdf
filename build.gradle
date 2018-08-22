@@ -97,7 +97,7 @@ dependencies {
   compile ("com.adaptris:interlok-core:$interlokCoreVersion") { changing= true}
   compile ("com.adaptris:interlok-common:$interlokCoreVersion") { changing= true}
   compile ("org.apache.avalon.framework:avalon-framework-impl:4.3.1")
-  compile ("org.apache.xmlgraphics:fop:1.1") { transitive= false}
+  compile ("org.apache.xmlgraphics:fop:2.3") { transitive= false}
   compile ("org.apache.xmlgraphics:xmlgraphics-commons:1.5") { transitive= false}
   compile ("org.apache.xmlgraphics:batik-anim:1.7") { transitive= false}
   compile ("org.apache.xmlgraphics:batik-awt-util:1.7") { transitive= false}
