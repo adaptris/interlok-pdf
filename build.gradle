@@ -108,7 +108,7 @@ dependencies {
   compile ("org.apache.xmlgraphics:batik-extension:1.7") { transitive= false}
   compile ("org.apache.xmlgraphics:batik-gvt:1.7") { transitive= false}
   compile ("org.apache.xmlgraphics:batik-js:1.7") { transitive= false}
-  compile ("org.apache.xmlgraphics:batik-parser:1.7") { transitive= false}
+  compile ("org.apache.xmlgraphics:batik-parser:1.10") { transitive= false}
   compile ("org.apache.xmlgraphics:batik-script:1.7") { transitive= false}
   compile ("org.apache.xmlgraphics:batik-svg-dom:1.7") { transitive= false}
   compile ("org.apache.xmlgraphics:batik-svggen:1.7") { transitive= false}
