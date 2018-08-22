@@ -1,7 +1,10 @@
 package com.adaptris.core.transform.pdf;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -11,19 +14,23 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
+import org.apache.fop.apps.FopFactoryBuilder;
 import org.apache.fop.apps.MimeConstants;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.adaptris.annotation.AdapterComponent;
 import com.adaptris.annotation.AutoPopulated;
 import com.adaptris.annotation.ComponentProfile;
+import com.adaptris.annotation.InputFieldDefault;
 import com.adaptris.core.AdaptrisMessage;
 import com.adaptris.core.CoreException;
 import com.adaptris.core.ServiceException;
 import com.adaptris.core.ServiceImp;
+import com.adaptris.core.util.Args;
+import com.adaptris.core.util.ExceptionHelper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -42,7 +49,9 @@ public class FopTransformService extends ServiceImp {
   @AutoPopulated
   private String outputFormat;
 
-  // castor transient
+  @InputFieldDefault(value = "new File('.').toURI()")
+  private String baseUri;
+
   private transient Transformer transformer;
 
   /**
@@ -63,15 +72,10 @@ public class FopTransformService extends ServiceImp {
 
   protected void closeService() {}
 
-  /** @see com.adaptris.core.Service#doService(com.adaptris.core.AdaptrisMessage) */
   public void doService(AdaptrisMessage msg) throws ServiceException {
 
-    OutputStream out = null;
-    InputStream in = null;
-    try {
-      out = msg.getOutputStream();
-      in = msg.getInputStream();
-      FopFactory fopFactory = FopFactory.newInstance();
+    try (InputStream in = msg.getInputStream(); OutputStream out = msg.getOutputStream()){
+      FopFactory fopFactory = new FopFactoryBuilder(baseURI()).build();
       Fop fop = fopFactory.newFop(this.getOutputFormat(), fopFactory.newFOUserAgent(), out);
 
       Source source = new StreamSource(in);
@@ -80,11 +84,7 @@ public class FopTransformService extends ServiceImp {
 //      msg.setPayload(out.toByteArray());
     }
     catch (Exception e) {
-      throw new ServiceException(e);
-    }
-    finally {
-      IOUtils.closeQuietly(in);
-      IOUtils.closeQuietly(out);
+      throw ExceptionHelper.wrapServiceException(e);
     }
   }
 
@@ -95,13 +95,29 @@ public class FopTransformService extends ServiceImp {
   }
 
   public void setOutputFormat(String s) {
-    if (s == null || "".equals(s)) {
-      throw new IllegalArgumentException("null or empty param");
-    }
-    this.outputFormat = s;
+    this.outputFormat = Args.notBlank(s, "outputFormat");
   }
 
   @Override
   public void prepare() throws CoreException {}
 
+  public String getBaseUri() {
+    return baseUri;
+  }
+
+  /**
+   * Specify the base URI for the FopFactoryBuilder.
+   * 
+   * @param uri the base uri; If not specified, then {@code new File(".").toURI()} is used.
+   */
+  public void setBaseUri(String uri) {
+    this.baseUri = uri;
+  }
+
+  protected URI baseURI() throws URISyntaxException {
+    if (!StringUtils.isEmpty(getBaseUri())) {
+      return new URI(getBaseUri());
+    }
+    return new File(".").toURI();
+  }
 }
