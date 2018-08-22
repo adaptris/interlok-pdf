@@ -102,7 +102,7 @@ dependencies {
   compile ("org.apache.xmlgraphics:batik-anim:1.7") { transitive= false}
   compile ("org.apache.xmlgraphics:batik-awt-util:1.7") { transitive= false}
   compile ("org.apache.xmlgraphics:batik-bridge:1.7") { transitive= false}
-  compile ("org.apache.xmlgraphics:batik-css:1.7") { transitive= false}
+  compile ("org.apache.xmlgraphics:batik-css:1.10") { transitive= false}
   compile ("org.apache.xmlgraphics:batik-dom:1.7") { transitive= false}
   compile ("org.apache.xmlgraphics:batik-ext:1.7") { transitive= false}
   compile ("org.apache.xmlgraphics:batik-extension:1.7") { transitive= false}
