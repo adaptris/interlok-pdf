@@ -114,7 +114,7 @@ dependencies {
   compile ("org.apache.xmlgraphics:batik-svggen:1.7") { transitive= false}
   compile ("org.apache.xmlgraphics:batik-transcoder:1.7") { transitive= false}
   compile ("org.apache.xmlgraphics:batik-util:1.7") { transitive= false}
-  compile ("org.apache.xmlgraphics:batik-xml:1.7") { transitive= false}
+  compile ("org.apache.xmlgraphics:batik-xml:1.10") { transitive= false}
 
   compile ("org.slf4j:slf4j-api:$slf4jVersion")
 
