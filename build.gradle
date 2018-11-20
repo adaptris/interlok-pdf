@@ -13,11 +13,12 @@ plugins {
 ext {
   interlokCoreVersion = project.hasProperty('interlokCoreVersion') ? project.getProperty('interlokCoreVersion') : '3.8-SNAPSHOT'
   releaseVersion = project.hasProperty('releaseVersion') ? project.getProperty('releaseVersion') : '3.8-SNAPSHOT'
-  mavenPublishUrl = project.hasProperty('mavenPublishUrl') ? project.getProperty('mavenPublishUrl') : 'https://nexus.adaptris.net/nexus/content/repositories/snapshots'
+  nexusBaseUrl = project.hasProperty('nexusBaseUrl') ? project.getProperty('nexusBaseUrl') : 'https://nexus.adaptris.net/nexus'
+  mavenPublishUrl = project.hasProperty('mavenPublishUrl') ? project.getProperty('mavenPublishUrl') : nexusBaseUrl + '/content/repositories/snapshots'
+  javadocsBaseUrl = nexusBaseUrl + "/content/sites/javadocs/com/adaptris"
   repoUsername = project.hasProperty('repoUsername') ? project.getProperty('repoUsername') : 'unknown'
   repoPassword = project.hasProperty('repoPassword') ? project.getProperty('repoPassword') : 'unknown'
   defaultNexusRepo = project.hasProperty('defaultNexusRepo') ? project.getProperty('defaultNexusRepo') : 'https://repo1.maven.org/maven2/'
-  javadocsBaseUrl = "https://nexus.adaptris.net/nexus/content/sites/javadocs/com/adaptris"
   interlokJavadocs= project.hasProperty('interlokJavadocs') ? project.getProperty('interlokJavadocs') : javadocsBaseUrl + "/interlok-core/" + interlokCoreVersion
   interlokCommonJavadocs= project.hasProperty('interlokCommonJavadocs') ? project.getProperty('interlokCommonJavadocs') : javadocsBaseUrl + "/interlok-common/" + interlokCoreVersion
   componentName='Interlok Transform to PDF'
@@ -67,11 +68,10 @@ def versionDir = "$buildDir/version"
 
 // In this section you declare where to find the dependencies of your project
 repositories {
-  jcenter()
+  mavenCentral()
   maven { url "$defaultNexusRepo" }
-  maven { url "https://nexus.adaptris.net/nexus/content/groups/public" }
-  maven { url "https://nexus.adaptris.net/nexus/content/repositories/snapshots" }
-  maven { url "https://nexus.adaptris.net/nexus/content/repositories/releases" }
+  maven { url "$nexusBaseUrl/content/groups/public" }
+  maven { url "$nexusBaseUrl/content/repositories/snapshots" }
 }
 
 
@@ -104,7 +104,7 @@ dependencies {
   compile ("org.slf4j:slf4j-api:$slf4jVersion")
 
   annotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion") {changing= true}
-  umlDoclet("nl.talsmasoftware:umldoclet:1.1.1")
+  umlDoclet("nl.talsmasoftware:umldoclet:1.1.2")
 
   testCompile ('junit:junit:4.12')
   testCompile ("com.adaptris:interlok-stubs:$interlokCoreVersion") { changing= true}
