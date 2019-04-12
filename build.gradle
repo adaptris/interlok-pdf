@@ -104,7 +104,7 @@ dependencies {
   compile ("org.apache.xmlgraphics:fop:2.3") {
     exclude group: "org.apache.pdfbox", module: "fontbox"
   }
-  compile ("org.apache.pdfbox:fontbox:2.0.14")
+  compile ("org.apache.pdfbox:fontbox:2.0.15")
 
   compile ("org.slf4j:slf4j-api:$slf4jVersion")
 
