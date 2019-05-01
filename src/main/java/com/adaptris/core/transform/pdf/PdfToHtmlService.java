@@ -1,16 +1,15 @@
 package com.adaptris.core.transform.pdf;
 
-import java.io.StringWriter;
-
+import java.io.Writer;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.fit.pdfdom.PDFDomTree;
-
 import com.adaptris.annotation.AdapterComponent;
 import com.adaptris.annotation.ComponentProfile;
 import com.adaptris.core.AdaptrisMessage;
 import com.adaptris.core.CoreException;
 import com.adaptris.core.ServiceException;
 import com.adaptris.core.ServiceImp;
+import com.adaptris.core.util.ExceptionHelper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -25,21 +24,10 @@ public class PdfToHtmlService extends ServiceImp {
 
   @Override
   public void doService(AdaptrisMessage msg) throws ServiceException {
-    PDDocument pdf = null;
-    try {
-      pdf = PDDocument.load(msg.getPayload());
-      StringWriter writer = new StringWriter();
-      
+    try (PDDocument pdf = PDDocument.load(msg.getPayload()); Writer writer = msg.getWriter()) {
       new PDFDomTree().writeText(pdf, writer);
-      writer.flush();      
-      msg.setContent(writer.toString(), msg.getContentEncoding());
     } catch (Throwable e) {
-      throw new ServiceException(e);
-    } finally {
-      try {
-        pdf.close();
-      } catch (Throwable e) {
-      }
+      throw ExceptionHelper.wrapServiceException(e);
     }
   }
 
