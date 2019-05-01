@@ -23,11 +23,16 @@ public class FopTransformServiceTest extends TransformServiceExample {
     super(name);
 
     if (PROPERTIES.getProperty(INPUT_KEY) != null) {
-      FileInputStream fileInputStream = new FileInputStream(new File(PROPERTIES
-          .getProperty(INPUT_KEY)));
-
-      input = new byte[fileInputStream.available()];
-      fileInputStream.read(input);
+      FileInputStream fileInputStream = null;
+      try {
+        fileInputStream = new FileInputStream(new File(PROPERTIES
+            .getProperty(INPUT_KEY)));
+  
+        input = new byte[fileInputStream.available()];
+        fileInputStream.read(input);
+      } finally {
+        fileInputStream.close();
+      }
     }
   }
 
