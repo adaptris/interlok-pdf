@@ -105,9 +105,13 @@ dependencies {
     exclude group: "org.apache.pdfbox", module: "fontbox"
   }
   compile ("org.apache.pdfbox:fontbox:2.0.15")
-  compile ("org.apache.pdfbox:pdfbox-tools:2.0.14")
-  compile ("net.sf.cssbox:pdf2dom:1.7")
-
+  compile ("org.apache.pdfbox:pdfbox-tools:2.0.15")
+  compile ("net.sf.cssbox:pdf2dom:1.7") {
+    exclude group: "xerces", module: "xercesImpl"
+    exclude group: "com.google.guava", module: "guava"
+  }
+  compile ("com.google.guava:guava:27.1-jre")
+  compile ("xerces:xercesImpl:2.12.0")
   compile ("org.slf4j:slf4j-api:$slf4jVersion")
 
   annotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion") {changing= true}
