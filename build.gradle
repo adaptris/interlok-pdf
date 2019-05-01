@@ -105,6 +105,8 @@ dependencies {
     exclude group: "org.apache.pdfbox", module: "fontbox"
   }
   compile ("org.apache.pdfbox:fontbox:2.0.15")
+  compile ("org.apache.pdfbox:pdfbox-tools:2.0.14")
+  compile ("net.sf.cssbox:pdf2dom:1.7")
 
   compile ("org.slf4j:slf4j-api:$slf4jVersion")
 
