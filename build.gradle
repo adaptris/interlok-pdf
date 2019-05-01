@@ -108,9 +108,12 @@ dependencies {
     exclude group: "xerces", module: "xercesImpl"
     exclude group: "com.google.guava", module: "guava"
     exclude group: "org.apache.pdfbox", module: "pdfbox-tools"
+    exclude group: "org.apache.pdfbox", module: "pdfbox"
+    exclude group: "org.apache.pdfbox", module: "pdfbox-debugger"
   }
   compile ("org.apache.pdfbox:fontbox:2.0.15")
   compile ("org.apache.pdfbox:pdfbox-tools:2.0.15")
+  compile ("org.apache.pdfbox:pdfbox:2.0.15")
   compile ("com.google.guava:guava:27.1-jre")
   compile ("xerces:xercesImpl:2.12.0")
   compile ("org.slf4j:slf4j-api:$slf4jVersion")
