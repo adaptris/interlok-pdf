@@ -3,6 +3,6 @@ TransformServiceExamples.baseDir=@BUILD_DIR@/examples
 FopTransformService.inputMessage=@BASE_DIR@/src/test/resources/fop/sample_input.fo
 FopTransformService.tmpDir=@BUILD_DIR@/tmp
 
-
+PdfToHtmlService.inputPdf=@BASE_DIR@/src/test/resources/pdf2html/sample-pdf.pdf
 
 
