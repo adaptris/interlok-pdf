@@ -15,7 +15,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 /**
  * Transform service which allows us to generate TEXT from PDF.
  * 
- * @config pdf-to-html-service
+ * @config pdf-to-text-service
  */
 @XStreamAlias("pdf-to-text-service")
 @AdapterComponent
