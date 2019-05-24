@@ -1,8 +1,10 @@
 package com.adaptris.core.transform.pdf;
 
 import java.io.Writer;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.fit.pdfdom.PDFDomTree;
+
 import com.adaptris.annotation.AdapterComponent;
 import com.adaptris.annotation.ComponentProfile;
 import com.adaptris.core.AdaptrisMessage;
@@ -19,7 +21,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  */
 @XStreamAlias("pdf-to-html-service")
 @AdapterComponent
-@ComponentProfile(summary = "Transform PDF into HTML", tag = "service,transform,html,pdf")
+@ComponentProfile(summary = "Transform PDF into HTML", tag = "service,transform,html,pdf", since = "3.9.0")
 public class PdfToHtmlService extends ServiceImp {
 
   @Override
