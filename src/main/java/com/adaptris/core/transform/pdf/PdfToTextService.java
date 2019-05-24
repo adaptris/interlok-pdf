@@ -1,9 +1,7 @@
 package com.adaptris.core.transform.pdf;
 
-import java.io.Writer;
-
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.fit.pdfdom.PDFDomTree;
+import org.apache.pdfbox.text.PDFTextStripper;
 
 import com.adaptris.annotation.AdapterComponent;
 import com.adaptris.annotation.ComponentProfile;
@@ -15,19 +13,23 @@ import com.adaptris.core.util.ExceptionHelper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * Transform service which allows us to generate HTML from PDF.
+ * Transform service which allows us to generate TEXT from PDF.
  * 
- * @config pdf-to-html-service
+ * @config pdf-to-text-service
  */
-@XStreamAlias("pdf-to-html-service")
+@XStreamAlias("pdf-to-text-service")
 @AdapterComponent
-@ComponentProfile(summary = "Transform PDF into HTML", tag = "service,transform,html,pdf", since = "3.9.0")
-public class PdfToHtmlService extends ServiceImp {
+@ComponentProfile(summary = "Transform PDF into TEXT", tag = "service,transform,text,pdf")
+public class PdfToTextService extends ServiceImp {
 
   @Override
   public void doService(AdaptrisMessage msg) throws ServiceException {
-    try (PDDocument pdf = PDDocument.load(msg.getPayload()); Writer writer = msg.getWriter()) {
-      new PDFDomTree().writeText(pdf, writer);
+    try (PDDocument pdf = PDDocument.load(msg.getPayload())) {
+      PDFTextStripper pdfStripper = new PDFTextStripper();
+
+      //Retrieving text from PDF document
+      String text = pdfStripper.getText(pdf);
+      msg.setContent(text, msg.getContentEncoding());
     } catch (Throwable e) {
       throw ExceptionHelper.wrapServiceException(e);
     }
@@ -47,3 +49,4 @@ public class PdfToHtmlService extends ServiceImp {
 
   
 }
+
