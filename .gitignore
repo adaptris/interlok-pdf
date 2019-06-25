@@ -28,3 +28,4 @@ target
 bin
 gradle.properties
 unit-tests.properties
+/.gradle/
