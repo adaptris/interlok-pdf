@@ -111,7 +111,7 @@ dependencies {
     exclude group: "org.apache.pdfbox", module: "pdfbox"
     exclude group: "org.apache.pdfbox", module: "pdfbox-debugger"
   }
-  compile ("org.apache.pdfbox:fontbox:2.0.15")
+  compile ("org.apache.pdfbox:fontbox:2.0.16")
   compile ("org.apache.pdfbox:pdfbox-tools:2.0.15")
   compile ("org.apache.pdfbox:pdfbox:2.0.15")
   compile ("com.google.guava:guava:28.0-jre")
