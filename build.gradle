@@ -116,7 +116,7 @@ dependencies {
   compile ("org.apache.pdfbox:fontbox:$pdfBoxVersion")
   compile ("org.apache.pdfbox:pdfbox-tools:$pdfBoxVersion")
   compile ("org.apache.pdfbox:pdfbox:$pdfBoxVersion")
-  compile ("com.google.guava:guava:28.0-jre")
+  compile ("com.google.guava:guava:28.1-jre")
   compile ("xerces:xercesImpl:2.12.0")
   compile ("org.slf4j:slf4j-api:$slf4jVersion")
 
