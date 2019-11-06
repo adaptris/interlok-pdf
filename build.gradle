@@ -121,7 +121,7 @@ configurations.all {
 dependencies {
   compile ("com.adaptris:interlok-core:$interlokCoreVersion") { changing= true}
   compile ("com.adaptris:interlok-common:$interlokCoreVersion") { changing= true}
-  compile ("org.apache.xmlgraphics:fop:2.3") {
+  compile ("org.apache.xmlgraphics:fop:2.4") {
     exclude group: "org.apache.pdfbox", module: "fontbox"
   }
   compile ("net.sf.cssbox:pdf2dom:1.8") {
