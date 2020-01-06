@@ -8,7 +8,7 @@ plugins {
   id 'jacoco'
   // Manage optional dependencies in maven pom.
   id 'nebula.optional-base' version '5.0.3'
-  id 'com.github.spotbugs' version '2.0.0'
+  id 'com.github.spotbugs' version '3.0.0'
 }
 
 
@@ -28,7 +28,7 @@ ext {
   componentName='Interlok Transform to PDF'
   organizationName = "Adaptris Ltd"
   organizationUrl = "http://interlok.adaptris.net"
-  slf4jVersion = '1.7.28'
+  slf4jVersion = '1.7.29'
   pdfBoxVersion = '2.0.17'
   log4j2Version = '2.12.1'
 }
@@ -66,6 +66,24 @@ ext.hasGraphViz = { ->
   }
 }
 
+ext.gitBranchNameOrTimestamp = { branchName ->
+  if (branchName.equals("HEAD") || branchName.equals("develop") || branchName.startsWith("release")) {
+    return new Date().format('HH:mm:ss z');
+  }
+  return branchName;
+}
+
+ext.buildInfo = { ->
+   new ByteArrayOutputStream().withStream { os ->
+      exec {
+        executable = "git"
+        args = ["rev-parse", "--abbrev-ref", "HEAD"]
+        standardOutput = os
+      }
+      def branchName = os.toString().replaceAll("\r", "").replaceAll("\n", "").trim();
+      return gitBranchNameOrTimestamp(branchName);
+    }
+}
 
 sourceCompatibility = 1.8
 group   = 'com.adaptris'
@@ -103,7 +121,7 @@ configurations.all {
 dependencies {
   compile ("com.adaptris:interlok-core:$interlokCoreVersion") { changing= true}
   compile ("com.adaptris:interlok-common:$interlokCoreVersion") { changing= true}
-  compile ("org.apache.xmlgraphics:fop:2.3") {
+  compile ("org.apache.xmlgraphics:fop:2.4") {
     exclude group: "org.apache.pdfbox", module: "fontbox"
   }
   compile ("net.sf.cssbox:pdf2dom:1.8") {
@@ -181,6 +199,7 @@ task generateVersion {
       entry(key: 'artifactId', value: project.name)
       entry(key: 'build.version', value: project.version)
       entry(key: 'build.date', value: new Date().format('yyyy-MM-dd'))
+      entry(key: 'build.info', value: buildInfo())
     }
   }
 }
@@ -243,11 +262,6 @@ task umlJavadoc(type: Javadoc) {
     options.addStringOption "umlIncludeProtectedInnerClasses","false"
     title= componentName
   }
-}
-
-
-jacoco {
-  toolVersion="0.8.3"
 }
 
 jacocoTestReport {
