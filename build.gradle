@@ -28,9 +28,9 @@ ext {
   componentName='Interlok Transform to PDF'
   organizationName = "Adaptris Ltd"
   organizationUrl = "http://interlok.adaptris.net"
-  slf4jVersion = '1.7.29'
+  slf4jVersion = '1.7.30'
   pdfBoxVersion = '2.0.17'
-  log4j2Version = '2.12.1'
+  log4j2Version = '2.13.0'
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
