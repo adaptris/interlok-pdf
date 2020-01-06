@@ -124,7 +124,7 @@ dependencies {
   compile ("org.apache.xmlgraphics:fop:2.4") {
     exclude group: "org.apache.pdfbox", module: "fontbox"
   }
-  compile ("net.sf.cssbox:pdf2dom:1.8") {
+  compile ("net.sf.cssbox:pdf2dom:1.9") {
     exclude group: "xerces", module: "xercesImpl"
     exclude group: "com.google.guava", module: "guava"
     exclude group: "org.apache.pdfbox", module: "pdfbox-tools"
