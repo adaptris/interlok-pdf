@@ -4,8 +4,8 @@ import com.adaptris.core.Service;
 
 public class PdfToHtmlServiceTest extends PdfToXServiceBase {
   
-  public PdfToHtmlServiceTest(String name) throws Exception {
-    super(name);
+  public PdfToHtmlServiceTest() throws Exception {
+    super();
   }
 
   @Override
@@ -13,4 +13,8 @@ public class PdfToHtmlServiceTest extends PdfToXServiceBase {
     return new PdfToHtmlService();
   }
 
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
+  }
 }

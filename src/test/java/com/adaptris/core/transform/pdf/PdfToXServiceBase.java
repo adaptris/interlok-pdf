@@ -1,8 +1,11 @@
 package com.adaptris.core.transform.pdf;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.FileInputStream;
-
+import org.junit.Before;
+import org.junit.Test;
 import com.adaptris.core.AdaptrisMessage;
 import com.adaptris.core.DefaultMessageFactory;
 import com.adaptris.core.Service;
@@ -20,8 +23,8 @@ public abstract class PdfToXServiceBase extends TransformServiceExample {
   
   private AdaptrisMessage message;
   
-  public PdfToXServiceBase(String name) throws Exception {
-    super(name);
+  public PdfToXServiceBase() throws Exception {
+    super();
     
     if (PROPERTIES.getProperty(INPUT_KEY) != null) {
       FileInputStream fileInputStream = null;
@@ -37,6 +40,7 @@ public abstract class PdfToXServiceBase extends TransformServiceExample {
     }
   }
   
+  @Before
   public void setUp() throws Exception {
     service = createPdfService();
     
@@ -51,6 +55,7 @@ public abstract class PdfToXServiceBase extends TransformServiceExample {
     return service;
   }
   
+  @Test
   public void testTransform() throws Exception {
     LifecycleHelper.initAndStart(service);
     service.doService(message);
@@ -62,6 +67,7 @@ public abstract class PdfToXServiceBase extends TransformServiceExample {
     assertTrue(message.getContent().contains("content"));
   }
   
+  @Test
   public void testFails() throws Exception {
     message.setContent("Not a pdf file.", message.getContentEncoding());
     
@@ -74,4 +80,9 @@ public abstract class PdfToXServiceBase extends TransformServiceExample {
     }
     LifecycleHelper.stopAndClose(service);
   }
+  
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
+  }  
 }

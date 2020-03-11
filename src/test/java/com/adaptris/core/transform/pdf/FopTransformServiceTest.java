@@ -1,10 +1,11 @@
 package com.adaptris.core.transform.pdf;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.FileInputStream;
-
+import org.junit.Before;
 import org.junit.Test;
-
 import com.adaptris.core.AdaptrisMessage;
 import com.adaptris.core.AdaptrisMessageFactory;
 import com.adaptris.core.transform.TransformServiceExample;
@@ -19,9 +20,14 @@ public class FopTransformServiceTest extends TransformServiceExample {
 
   private FopTransformService service;
 
-  public FopTransformServiceTest(String name) throws Exception {
-    super(name);
+  public FopTransformServiceTest() throws Exception {
+    super();
+  }
 
+  @Before
+  public void setUp() throws Exception {
+    service = new FopTransformService();
+    
     if (PROPERTIES.getProperty(INPUT_KEY) != null) {
       FileInputStream fileInputStream = null;
       try {
@@ -33,12 +39,7 @@ public class FopTransformServiceTest extends TransformServiceExample {
       } finally {
         fileInputStream.close();
       }
-    }
-  }
-
-  @Override
-  protected void setUp() throws Exception {
-    service = new FopTransformService();
+    }    
   }
 
   @Test
@@ -66,8 +67,14 @@ public class FopTransformServiceTest extends TransformServiceExample {
     System.err.println("File written to " + f.getCanonicalPath());
 
   }
+  
   @Override
   protected Object retrieveObjectForSampleConfig() {
     return service;
+  }
+  
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }
