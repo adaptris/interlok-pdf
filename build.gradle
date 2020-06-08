@@ -30,7 +30,7 @@ ext {
   organizationName = "Adaptris Ltd"
   organizationUrl = "http://interlok.adaptris.net"
   slf4jVersion = '1.7.30'
-  pdfBoxVersion = '2.0.19'
+  pdfBoxVersion = '2.0.20'
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
