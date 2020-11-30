@@ -8,8 +8,8 @@ plugins {
   id 'jacoco'
   // Manage optional dependencies in maven pom.
   id 'nebula.optional-base' version '5.0.3'
-  id 'com.github.spotbugs' version '4.5.0'
-  id 'org.owasp.dependencycheck' version '5.3.2.1'
+  id 'com.github.spotbugs' version '4.5.1'
+  id 'org.owasp.dependencycheck' version '6.0.3'
 }
 
 
@@ -141,14 +141,14 @@ dependencies {
   compile ("org.apache.pdfbox:fontbox:$pdfBoxVersion")
   compile ("org.apache.pdfbox:pdfbox-tools:$pdfBoxVersion")
   compile ("org.apache.pdfbox:pdfbox:$pdfBoxVersion")
-  compile ("com.google.guava:guava:29.0-jre")
+  compile ("com.google.guava:guava:30.0-jre")
   compile ("xerces:xercesImpl:2.12.0")
   compile ("org.slf4j:slf4j-api:$slf4jVersion")
 
   annotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion") {changing= true}
   umlDoclet("nl.talsmasoftware:umldoclet:1.1.4")
 
-  testCompile ('junit:junit:4.13')
+  testCompile ('junit:junit:4.13.1')
   testCompile "org.slf4j:slf4j-simple:$slf4jVersion"
   // exclude any log4j dependencies so that we can just use slf4j simple.
   // works around INTERLOk-3233
@@ -156,8 +156,8 @@ dependencies {
     changing= true
     exclude group: "org.apache.logging.log4j"
   }
-  testCompile ("org.mockito:mockito-core:3.5.9")
-  testCompile ("org.mockito:mockito-inline:3.5.9")
+  testCompile ("org.mockito:mockito-core:3.6.0")
+  testCompile ("org.mockito:mockito-inline:3.6.0")
   javadoc("com.adaptris:interlok-core-apt:$interlokCoreVersion") { changing= true}
   offlineJavadocPackages ("com.adaptris:interlok-core:$interlokCoreVersion:javadoc@jar") { changing= true}
   offlineJavadocPackages ("com.adaptris:interlok-common:$interlokCoreVersion:javadoc@jar") { changing= true}
