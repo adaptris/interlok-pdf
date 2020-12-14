@@ -320,6 +320,7 @@ publishing {
         properties.appendNode("target", "3.8.0+")
         properties.appendNode("tags", "transform,pdf")
         properties.appendNode("license", "false")
+        properties.appendNode("repository", "https://github.com/adaptris/interlok-pdf")
       }
     }
   }
