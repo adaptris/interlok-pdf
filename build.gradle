@@ -135,7 +135,7 @@ configurations.all {
 dependencies {
   compile ("com.adaptris:interlok-core:$interlokCoreVersion") { changing= true}
   compile ("com.adaptris:interlok-common:$interlokCoreVersion") { changing= true}
-  compile ("org.apache.xmlgraphics:fop:2.5") {
+  compile ("org.apache.xmlgraphics:fop:2.6") {
     exclude group: "org.apache.pdfbox", module: "fontbox"
     exclude group: "org.apache.ant", module: "ant"
     exclude group: "org.apache.ant", module: "ant-launcher"
