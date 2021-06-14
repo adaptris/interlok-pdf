@@ -33,7 +33,7 @@ ext {
   organizationName = "Adaptris Ltd"
   organizationUrl = "http://interlok.adaptris.net"
   slf4jVersion = '1.7.30'
-  pdfBoxVersion = '2.0.23'
+  pdfBoxVersion = '2.0.24'
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
@@ -161,6 +161,7 @@ dependencies {
   compile ("com.google.guava:guava:30.1.1-jre")
   compile ("xerces:xercesImpl:2.12.1")
   compile ("org.slf4j:slf4j-api:$slf4jVersion")
+  compile ("commons-io:commons-io:2.10.0")
 
   annotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion") {changing= true}
   umlDoclet("nl.talsmasoftware:umldoclet:1.1.4")
