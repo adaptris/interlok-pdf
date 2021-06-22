@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+  <suppress>
+    <notes><![CDATA[
+    file name: batik-i18n-1.14.jar
+    This is a false positive, since i18n is a .net thinger.
+    ]]></notes>
+    <packageUrl regex="true">^pkg:maven/org\.apache\.xmlgraphics/batik\-i18n@.*$</packageUrl>
+    <cpe>cpe:/a:i18n_project:i18n</cpe>
+  </suppress>
+</suppressions>
