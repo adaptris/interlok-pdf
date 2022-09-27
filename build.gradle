@@ -33,6 +33,7 @@ ext {
   organizationUrl = "http://interlok.adaptris.net"
   slf4jVersion = '2.0.1'
   pdfBoxVersion = '2.0.26'
+  batikVersion = '1.15'
   mockitoVersion = '4.8.0'
 
 }
@@ -156,8 +157,14 @@ configurations.all {
 dependencies {
   api ("com.adaptris:interlok-core:$interlokCoreVersion") { changing= true}
   api ("com.adaptris:interlok-common:$interlokCoreVersion") { changing= true}
+  
+  implementation ("org.apache.xmlgraphics:batik-extension:$batikVersion")
+  implementation ("org.apache.xmlgraphics:batik-transcoder:$batikVersion")
+  
   implementation ("org.apache.xmlgraphics:fop:2.7") {
     exclude group: "org.apache.pdfbox", module: "fontbox"
+    exclude group: "org.apache.xmlgraphics", module: "batik-extension"
+    exclude group: "org.apache.xmlgraphics", module: "batik-transcoder"
     exclude group: "org.apache.ant", module: "ant"
     exclude group: "org.apache.ant", module: "ant-launcher"
   }
