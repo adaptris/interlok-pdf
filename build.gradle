@@ -7,14 +7,14 @@ plugins {
   id 'jacoco'
   // Manage optional dependencies in maven pom.
   id 'nebula.optional-base' version '7.0.0'
-  id 'com.github.spotbugs' version '5.0.7'
-  id 'org.owasp.dependencycheck' version '7.1.0.1'
+  id 'com.github.spotbugs' version '5.0.12'
+  id 'org.owasp.dependencycheck' version '7.2.1'
 }
 
 
 ext {
-  interlokCoreVersion = project.findProperty('interlokCoreVersion') ?: '4.5-SNAPSHOT'
-  releaseVersion = project.findProperty('releaseVersion') ?: '4.5-SNAPSHOT'
+  interlokCoreVersion = project.findProperty('interlokCoreVersion') ?: '4.6-SNAPSHOT'
+  releaseVersion = project.findProperty('releaseVersion') ?: '4.6-SNAPSHOT'
   nexusBaseUrl = project.findProperty('nexusBaseUrl') ?: 'https://nexus.adaptris.net/nexus'
   mavenPublishUrl = project.findProperty('mavenPublishUrl') ?: nexusBaseUrl + '/content/repositories/snapshots'
   javadocsBaseUrl = nexusBaseUrl + "/content/sites/javadocs/com/adaptris"
@@ -31,9 +31,10 @@ ext {
 
   organizationName = "Adaptris Ltd"
   organizationUrl = "http://interlok.adaptris.net"
-  slf4jVersion = '1.7.36'
-  pdfBoxVersion = '2.0.26'
-  mockitoVersion = '4.5.1'
+  slf4jVersion = '2.0.3'
+  pdfBoxVersion = '2.0.27'
+  batikVersion = '1.15'
+  mockitoVersion = '4.8.0'
 
 }
 
@@ -156,8 +157,14 @@ configurations.all {
 dependencies {
   api ("com.adaptris:interlok-core:$interlokCoreVersion") { changing= true}
   api ("com.adaptris:interlok-common:$interlokCoreVersion") { changing= true}
+  
+  implementation ("org.apache.xmlgraphics:batik-extension:$batikVersion")
+  implementation ("org.apache.xmlgraphics:batik-transcoder:$batikVersion")
+  
   implementation ("org.apache.xmlgraphics:fop:2.7") {
     exclude group: "org.apache.pdfbox", module: "fontbox"
+    exclude group: "org.apache.xmlgraphics", module: "batik-extension"
+    exclude group: "org.apache.xmlgraphics", module: "batik-transcoder"
     exclude group: "org.apache.ant", module: "ant"
     exclude group: "org.apache.ant", module: "ant-launcher"
   }
