@@ -1,16 +1,16 @@
 package com.adaptris.core.transform.pdf;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import java.io.File;
 import java.io.FileInputStream;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import com.adaptris.core.AdaptrisMessage;
 import com.adaptris.core.DefaultMessageFactory;
 import com.adaptris.core.Service;
 import com.adaptris.core.ServiceException;
-import com.adaptris.core.transform.TransformServiceExample;
+import com.adaptris.interlok.junit.scaffolding.services.TransformServiceExample;
 import com.adaptris.core.util.LifecycleHelper;
 
 public abstract class PdfToXServiceBase extends TransformServiceExample {
@@ -40,7 +40,7 @@ public abstract class PdfToXServiceBase extends TransformServiceExample {
     }
   }
   
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     service = createPdfService();
     
@@ -80,9 +80,5 @@ public abstract class PdfToXServiceBase extends TransformServiceExample {
     }
     LifecycleHelper.stopAndClose(service);
   }
-  
-  @Override
-  public boolean isAnnotatedForJunit4() {
-    return true;
-  }  
+
 }
