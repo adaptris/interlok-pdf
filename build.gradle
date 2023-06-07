@@ -187,7 +187,7 @@ dependencies {
   umlDoclet("nl.talsmasoftware:umldoclet:1.1.4")
 
   testImplementation ("org.junit.jupiter:junit-jupiter-api:5.9.3")
-  testImplementation ("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+  testImplementation ("org.junit.jupiter:junit-jupiter-engine:5.9.3")
   testImplementation ("org.slf4j:slf4j-simple:$slf4jVersion")
   testImplementation ("com.adaptris:interlok-stubs:$interlokCoreVersion") { changing= true }
   testImplementation ("org.mockito:mockito-core:$mockitoVersion")
