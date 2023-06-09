@@ -13,8 +13,8 @@ plugins {
 
 
 ext {
-  interlokCoreVersion = project.findProperty('interlokCoreVersion') ?: '4.8-SNAPSHOT'
-  releaseVersion = project.findProperty('releaseVersion') ?: '4.8-SNAPSHOT'
+  interlokCoreVersion = project.findProperty('interlokCoreVersion') ?: '5.0-SNAPSHOT'
+  releaseVersion = project.findProperty('releaseVersion') ?: '5.0-SNAPSHOT'
   nexusBaseUrl = project.findProperty('nexusBaseUrl') ?: 'https://nexus.adaptris.net/nexus'
   mavenPublishUrl = project.findProperty('mavenPublishUrl') ?: nexusBaseUrl + '/content/repositories/snapshots'
   javadocsBaseUrl = nexusBaseUrl + "/content/sites/javadocs/com/adaptris"
@@ -31,10 +31,10 @@ ext {
 
   organizationName = "Adaptris Ltd"
   organizationUrl = "http://interlok.adaptris.net"
-  slf4jVersion = '2.0.3'
+  slf4jVersion = '2.0.7'
   pdfBoxVersion = '2.0.28'
   batikVersion = '1.16'
-  mockitoVersion = '4.9.0'
+  mockitoVersion = '5.2.0'
 
 }
 
@@ -83,8 +83,8 @@ ext.buildInfo = { ->
     }
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 group   = 'com.adaptris'
 version = releaseVersion
 def versionDir = "$buildDir/version"
@@ -178,15 +178,16 @@ dependencies {
   implementation ("org.apache.pdfbox:fontbox:$pdfBoxVersion")
   implementation ("org.apache.pdfbox:pdfbox-tools:$pdfBoxVersion")
   implementation ("org.apache.pdfbox:pdfbox:$pdfBoxVersion")
-  implementation ("com.google.guava:guava:31.1-jre")
+  implementation ("com.google.guava:guava:32.0.0-jre")
   implementation ("xerces:xercesImpl:2.12.2")
   implementation ("org.slf4j:slf4j-api:$slf4jVersion")
-  implementation ("commons-io:commons-io:2.11.0")
+  implementation ("commons-io:commons-io:2.12.0")
 
   annotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion") {changing= true}
   umlDoclet("nl.talsmasoftware:umldoclet:1.1.4")
 
-  testImplementation ('junit:junit:4.13.2')
+  testImplementation ("org.junit.jupiter:junit-jupiter-api:5.9.3")
+  testImplementation ("org.junit.jupiter:junit-jupiter-engine:5.9.3")
   testImplementation ("org.slf4j:slf4j-simple:$slf4jVersion")
   testImplementation ("com.adaptris:interlok-stubs:$interlokCoreVersion") { changing= true }
   testImplementation ("org.mockito:mockito-core:$mockitoVersion")
@@ -270,7 +271,6 @@ javadoc {
 
     taglets = ["com.adaptris.taglet.ConfigTaglet", "com.adaptris.taglet.LicenseTaglet"]
     options.addStringOption "tagletpath", configurations.javadoc.asPath
-    options.addBooleanOption "-no-module-directories", true
     options.addStringOption('Xdoclint:none', '-quiet')
     title= componentName
   }
@@ -291,7 +291,6 @@ task umlJavadoc(type: Javadoc) {
 
     taglets = ["com.adaptris.taglet.ConfigTaglet", "com.adaptris.taglet.LicenseTaglet"]
     options.addStringOption "tagletpath", configurations.javadoc.asPath
-    options.addBooleanOption "-no-module-directories", true
     options.addStringOption('Xdoclint:none', '-quiet')
     options.docletpath = configurations.umlDoclet.files.asType(List)
     options.doclet = "nl.talsmasoftware.umldoclet.UMLDoclet"
@@ -313,6 +312,11 @@ task umlJavadoc(type: Javadoc) {
     title= componentName
   }
 }
+
+test {
+  jvmArgs = ['--add-opens', 'java.base/java.lang=ALL-UNNAMED', '--add-opens', 'java.base/java.util=ALL-UNNAMED']
+  useJUnitPlatform()
+  }
 
 jacocoTestReport {
     reports {
@@ -354,7 +358,7 @@ publishing {
       pom.withXml {
         asNode().appendNode("name", componentName)
         asNode().appendNode("description", componentDesc)
-		asNode().appendNode("url", "https://interlok.adaptris.net/interlok-docs/#/")
+        asNode().appendNode("url", "https://interlok.adaptris.net/interlok-docs/#/")
         def properties = asNode().appendNode("properties")
         properties.appendNode("target", "3.8.0+")
         properties.appendNode("tags", "transform,pdf")

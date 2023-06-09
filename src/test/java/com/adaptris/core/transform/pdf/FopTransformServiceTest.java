@@ -1,14 +1,14 @@
 package com.adaptris.core.transform.pdf;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.File;
 import java.io.FileInputStream;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import com.adaptris.core.AdaptrisMessage;
 import com.adaptris.core.AdaptrisMessageFactory;
-import com.adaptris.core.transform.TransformServiceExample;
+import com.adaptris.interlok.junit.scaffolding.services.TransformServiceExample;
 import com.adaptris.fs.OverwriteIfExistsWorker;
 
 public class FopTransformServiceTest extends TransformServiceExample {
@@ -24,7 +24,7 @@ public class FopTransformServiceTest extends TransformServiceExample {
     super();
   }
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     service = new FopTransformService();
     
@@ -73,8 +73,4 @@ public class FopTransformServiceTest extends TransformServiceExample {
     return service;
   }
   
-  @Override
-  public boolean isAnnotatedForJunit4() {
-    return true;
-  }
 }
