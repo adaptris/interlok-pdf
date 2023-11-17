@@ -13,8 +13,4 @@ public class PdfToHtmlServiceTest extends PdfToXServiceBase {
     return new PdfToHtmlService();
   }
 
-  @Override
-  public boolean isAnnotatedForJunit4() {
-    return true;
-  }
 }
