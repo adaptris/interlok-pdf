@@ -178,7 +178,7 @@ dependencies {
     exclude group: "org.apache.ant", module: "ant"
     exclude group: "org.apache.ant", module: "ant-launcher"
   }
-  implementation ("net.sf.cssbox:pdf2dom:3.0.0") {
+  implementation ("io.github.se-be:pdf2dom:3.0.0") {
     exclude group: "xerces", module: "xercesImpl"
     exclude group: "com.google.guava", module: "guava"
     exclude group: "org.apache.pdfbox", module: "pdfbox-tools"
@@ -205,7 +205,6 @@ dependencies {
   javadoc("com.adaptris:interlok-core-apt:$interlokCoreVersion") { changing= true}
   offlineJavadocPackages ("com.adaptris:interlok-core:$interlokCoreVersion:javadoc@jar") { changing= true}
   offlineJavadocPackages ("com.adaptris:interlok-common:$interlokCoreVersion:javadoc@jar") { changing= true}
-
 }
 
 

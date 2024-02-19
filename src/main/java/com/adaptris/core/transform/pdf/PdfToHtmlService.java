@@ -5,7 +5,6 @@ import java.io.Writer;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.io.RandomAccessReadBuffer;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.fit.pdfdom.PDFDomTree;
 
 import com.adaptris.annotation.AdapterComponent;
 import com.adaptris.annotation.ComponentProfile;
@@ -15,6 +14,8 @@ import com.adaptris.core.ServiceException;
 import com.adaptris.core.ServiceImp;
 import com.adaptris.core.util.ExceptionHelper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+import io.github.se_be.pdf2dom.PDFDomTree;
 
 /**
  * Transform service which allows us to generate HTML from PDF.

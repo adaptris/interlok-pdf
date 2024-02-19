@@ -16,6 +16,7 @@ public class PdfToHtmlServiceTest extends PdfToXServiceBase {
 
   private static String INPUT_KEY_2 = "PdfToHtmlService.inputPdf2";
   private static String OUTPUT_KEY = "PdfToHtmlService.outputHtml";
+  private static final String UTF_8 = "utf-8";
 
   private byte[] input2;
   private byte[] output;
@@ -47,11 +48,12 @@ public class PdfToHtmlServiceTest extends PdfToXServiceBase {
   public void testTransformMultiPage() throws Exception {
     Service service = createPdfService();
     AdaptrisMessage message = DefaultMessageFactory.getDefaultInstance().newMessage(input2);
+    message.setContentEncoding(UTF_8);
     LifecycleHelper.initAndStart(service);
     service.doService(message);
     LifecycleHelper.stopAndClose(service);
 
-    assertEquals(stripLineBreakChars(new String(output)), stripLineBreakChars(message.getContent()));
+    assertEquals(stripLineBreakChars(new String(output, UTF_8)), stripLineBreakChars(new String(message.getPayload(), UTF_8)));
   }
 
   private String stripLineBreakChars(String str) {
