@@ -4,5 +4,5 @@ FopTransformService.inputMessage=@BASE_DIR@/src/test/resources/fop/sample_input.
 FopTransformService.tmpDir=@BUILD_DIR@/tmp
 
 PdfToHtmlService.inputPdf=@BASE_DIR@/src/test/resources/pdf2html/sample-pdf.pdf
-
-
+PdfToHtmlService.inputPdf2=@BASE_DIR@/src/test/resources/pdf2html/sample-pdf-multi-page.pdf
+PdfToHtmlService.outputHtml=@BASE_DIR@/src/test/resources/pdf2html/sample-html-multi-page.html
