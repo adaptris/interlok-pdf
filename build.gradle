@@ -181,7 +181,7 @@ dependencies {
   implementation ("com.google.guava:guava:33.1.0-jre")
   implementation ("xerces:xercesImpl:2.12.2")
   implementation ("org.slf4j:slf4j-api:$slf4jVersion")
-  implementation ("commons-io:commons-io:2.16.0")
+  implementation ("commons-io:commons-io:2.16.1")
 
   annotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion") {changing= true}
   umlDoclet("nl.talsmasoftware:umldoclet:2.1.2")
