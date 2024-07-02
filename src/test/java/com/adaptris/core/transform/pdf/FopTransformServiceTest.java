@@ -2,14 +2,17 @@ package com.adaptris.core.transform.pdf;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.io.FileInputStream;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import com.adaptris.core.AdaptrisMessage;
 import com.adaptris.core.AdaptrisMessageFactory;
-import com.adaptris.interlok.junit.scaffolding.services.TransformServiceExample;
 import com.adaptris.fs.OverwriteIfExistsWorker;
+import com.adaptris.interlok.junit.scaffolding.services.TransformServiceExample;
 
 public class FopTransformServiceTest extends TransformServiceExample {
 
@@ -27,19 +30,13 @@ public class FopTransformServiceTest extends TransformServiceExample {
   @BeforeEach
   public void setUp() throws Exception {
     service = new FopTransformService();
-    
+
     if (PROPERTIES.getProperty(INPUT_KEY) != null) {
-      FileInputStream fileInputStream = null;
-      try {
-        fileInputStream = new FileInputStream(new File(PROPERTIES
-            .getProperty(INPUT_KEY)));
-  
+      try (FileInputStream fileInputStream = new FileInputStream(new File(PROPERTIES.getProperty(INPUT_KEY)))) {
         input = new byte[fileInputStream.available()];
         fileInputStream.read(input);
-      } finally {
-        fileInputStream.close();
       }
-    }    
+    }
   }
 
   @Test
@@ -67,10 +64,10 @@ public class FopTransformServiceTest extends TransformServiceExample {
     System.err.println("File written to " + f.getCanonicalPath());
 
   }
-  
+
   @Override
   protected Object retrieveObjectForSampleConfig() {
     return service;
   }
-  
+
 }

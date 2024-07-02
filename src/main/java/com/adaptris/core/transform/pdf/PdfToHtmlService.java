@@ -2,8 +2,9 @@ package com.adaptris.core.transform.pdf;
 
 import java.io.Writer;
 
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.io.RandomAccessReadBuffer;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.fit.pdfdom.PDFDomTree;
 
 import com.adaptris.annotation.AdapterComponent;
 import com.adaptris.annotation.ComponentProfile;
@@ -14,9 +15,11 @@ import com.adaptris.core.ServiceImp;
 import com.adaptris.core.util.ExceptionHelper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+import io.github.se_be.pdf2dom.PDFDomTree;
+
 /**
  * Transform service which allows us to generate HTML from PDF.
- * 
+ *
  * @config pdf-to-html-service
  */
 @XStreamAlias("pdf-to-html-service")
@@ -26,7 +29,7 @@ public class PdfToHtmlService extends ServiceImp {
 
   @Override
   public void doService(AdaptrisMessage msg) throws ServiceException {
-    try (PDDocument pdf = PDDocument.load(msg.getPayload()); Writer writer = msg.getWriter()) {
+    try (PDDocument pdf = Loader.loadPDF(new RandomAccessReadBuffer(msg.getPayload())); Writer writer = msg.getWriter()) {
       new PDFDomTree().writeText(pdf, writer);
     } catch (Throwable e) {
       throw ExceptionHelper.wrapServiceException(e);
@@ -45,5 +48,4 @@ public class PdfToHtmlService extends ServiceImp {
   protected void closeService() {
   }
 
-  
 }
