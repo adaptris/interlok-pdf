@@ -171,7 +171,7 @@ dependencies {
   implementation ("org.apache.xmlgraphics:batik-extension:$batikVersion")
   implementation ("org.apache.xmlgraphics:batik-transcoder:$batikVersion")
   
-  implementation ("org.apache.xmlgraphics:fop:2.9") {
+  implementation ("org.apache.xmlgraphics:fop:2.10") {
     exclude group: "org.apache.pdfbox", module: "fontbox"
     exclude group: "org.apache.xmlgraphics", module: "batik-extension"
     exclude group: "org.apache.xmlgraphics", module: "batik-transcoder"
