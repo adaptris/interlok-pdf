@@ -188,7 +188,7 @@ dependencies {
   implementation ("org.apache.pdfbox:fontbox:$pdfBoxVersion")
   implementation ("org.apache.pdfbox:pdfbox-tools:$pdfBoxVersion")
   implementation ("org.apache.pdfbox:pdfbox:$pdfBoxVersion")
-  implementation ("com.google.guava:guava:33.3.1-jre")
+  implementation ("com.google.guava:guava:33.4.0-jre")
   implementation ("xerces:xercesImpl:2.12.2")
   implementation ("org.slf4j:slf4j-api:$slf4jVersion")
   implementation ("commons-io:commons-io:2.18.0")
