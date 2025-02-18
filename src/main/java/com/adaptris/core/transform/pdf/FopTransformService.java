@@ -15,6 +15,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
 
+import com.adaptris.core.fs.FsHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
@@ -118,7 +119,7 @@ public class FopTransformService extends ServiceImp {
 
   protected URI baseURI() throws URISyntaxException {
     if (!StringUtils.isEmpty(getBaseUri())) {
-      return new URI(getBaseUri());
+      return FsHelper.createUriFromString(getBaseUri(), true);
     }
     return new File(".").toURI();
   }
